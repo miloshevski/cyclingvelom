@@ -1,0 +1,90 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+#logo {
+  width: 200px;
+}
+nav {
+  padding: 0 15%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+}
+.menu {
+  list-style-type: none;
+}
+.tab-link {
+  text-decoration: none;
+  color: #000;
+  font-weight: 700;
+}
+.tab-item {
+  display: inline-block;
+  padding: 10px;
+}
+.tab-link.active {
+  color: red;
+}
+.tab-link:hover {
+  color: red;
+  font-weight: bold;
+}
+#home {
+  height: 100vh;
+  width: 100%;
+}
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+img {
+  width: 100%;
+  border-radius: 30px;
+}
+.row {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.row > * {
+  flex: 1;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#home h1,
+#home h1 span,
+#home h2 {
+  font-size: 50px;
+  color: #ff0000;
+  font-weight: 800;
+  font-style: italic;
+}
+#home h2,
+#home h2 span {
+  font-size: 20px;
+  color: #ff0000;
+  font-weight: 800;
+  font-style: italic;
+}
+
+#home h1 span,
+#home h2 span {
+  color: gold;
+}
+
+/* ABOUT */
