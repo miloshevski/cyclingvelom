@@ -151,6 +151,10 @@ section {
 #about .col {
   width: 50%;
 }
+h2 {
+  font-size: 20px;
+  font-weight: 800;
+}
 #about h2 {
   font-size: 20px;
   font-weight: 800;
@@ -234,7 +238,28 @@ h4 {
   transition: 0.3s;
   border-radius: 10px;
 }
-.grid-item:hover {
+#history .grid-item:hover {
   background-color: #db003a;
   transform: scale(1.15);
+}
+#results {
+  height: 100vh;
+  background-color: #fff;
+}
+#results .row {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+}
+#results * {
+  color: #ff0044;
+}
+#results h2,
+#results h1 {
+  text-align: center;
+}
+#results .grid-down {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
 }
