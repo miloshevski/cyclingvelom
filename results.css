@@ -1,0 +1,101 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  font-family: "Comfortaa", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+#logo {
+  width: 200px;
+}
+body {
+  background-color: #ff0044;
+  background-image: url("slike/black-twill.png");
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: #202020;
+  padding: 0 15%;
+  height: 55px;
+}
+h1 {
+  font-size: 50px;
+  font-weight: 800;
+  color: white;
+}
+
+.menu {
+  list-style-type: none;
+}
+.tab-link {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 700;
+  font-family: "Roboto", sans-serif;
+}
+.tab-item {
+  display: inline-block;
+  padding: 10px;
+}
+.tab-link.active {
+  color: #ff0044;
+}
+.tab-link:hover {
+  color: #ff0044;
+  font-weight: bold;
+}
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.row {
+  display: flex;
+  justify-content: center;
+}
+.row-wrapper {
+  display: grid;
+  width: 75%;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: 50px;
+  padding: 5% 0;
+}
+.result-card {
+  background-color: #ff0044;
+  row-gap: 20px;
+  border-radius: 30px;
+}
+h1,
+h2,
+p {
+  color: #fff;
+}
+.result-card:nth-child(2n-1) {
+  background-color: #ffff00;
+}
+.result-card:nth-child(2n-1) h1,
+.result-card:nth-child(2n-1) h2,
+.result-card:nth-child(2n-1) p {
+  color: #ff0044;
+}
+img {
+  width: 100%;
+  border-radius: 30px;
+}
+.text-wrapper {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  text-align: center;
+}
