@@ -146,6 +146,9 @@ section {
   background-color: #ff0044;
   background-color: #fff;
 }
+#about .img-wrapper {
+  width: 50%;
+}
 .card {
   display: flex;
   justify-content: space-between;
@@ -357,5 +360,13 @@ h4 {
   border-radius: 10px;
 }
 #gallery .btn {
-  background-color: white;
+  background-color: #ff0044;
+  border: solid 2px #fff;
+  color: white;
+  font-weight: 800;
+  transition: 0.3;
+}
+#gallery .btn:hover {
+  background-color: #fff;
+  color: #ff0044;
 }
