@@ -73,24 +73,19 @@ h1 {
 .result-card {
   background-color: #ff0044;
   row-gap: 20px;
-  border-radius: 30px;
+  border-radius: 20px;
+  border: solid 3px #000;
 }
 h1,
 h2,
 p {
   color: #fff;
 }
-.result-card:nth-child(2n-1) {
-  background-color: #ffff00;
-}
-.result-card:nth-child(2n-1) h1,
-.result-card:nth-child(2n-1) h2,
-.result-card:nth-child(2n-1) p {
-  color: #ff0044;
-}
+
 img {
   width: 100%;
-  border-radius: 30px;
+  border-radius: 15px 15px 0 0;
+  object-fit: cover;
 }
 .text-wrapper {
   padding: 20px;
@@ -98,4 +93,7 @@ img {
   flex-direction: column;
   row-gap: 20px;
   text-align: center;
+}
+.img-wrapper {
+  width: 100%;
 }

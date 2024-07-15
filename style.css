@@ -46,7 +46,6 @@ h1 {
 }
 .tab-link:hover {
   color: #ff0044;
-  font-weight: bold;
 }
 #home {
   height: calc(100vh - 55px);
