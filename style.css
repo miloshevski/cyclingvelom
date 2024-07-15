@@ -145,6 +145,9 @@ section {
   background-color: #ff0044;
   background-color: #fff;
 }
+#about .img-wrapper {
+  width: 50%;
+}
 .card {
   display: flex;
   justify-content: space-between;
@@ -249,8 +252,9 @@ h4 {
   border-radius: 10px;
 }
 #history .grid-item:hover {
-  background-color: #db003a;
-  transform: scale(1.15);
+  background-color: #ff0044;
+  /* box-shadow: 0 0 10px 10px #ffffffbb;
+  transform: scale(1.15); */
 }
 /* RESULTS */
 #results {
@@ -322,4 +326,46 @@ h4 {
 #results .btn:hover {
   background-color: #ff0044;
   color: #fff;
+}
+/* GALLERY */
+#gallery {
+  background-color: #ff0044;
+  height: 100vh;
+}
+#gallery .container .row {
+  flex-direction: column;
+  row-gap: 30px;
+  align-items: center;
+  justify-content: center;
+}
+#gallery h1,
+#gallery h2 {
+  text-align: center;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 30px;
+}
+.gallery-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+  grid-template-rows: auto;
+  gap: 20px;
+}
+.img-wrapper {
+  width: 300px;
+  height: fit-content;
+}
+#gallery img {
+  border-radius: 10px;
+}
+#gallery .btn {
+  background-color: #ff0044;
+  border: solid 2px #fff;
+  color: white;
+  font-weight: 800;
+  transition: 0.3;
+}
+#gallery .btn:hover {
+  background-color: #fff;
+  color: #ff0044;
 }
