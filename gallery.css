@@ -1,0 +1,25 @@
+body {
+  background-color: #202020;
+  background-image: url("slike/45-degree-fabric-light.png");
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#gallery {
+  width: 75%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-rows: auto;
+  gap: 20px;
+}
+img {
+  width: 100%;
+  transition: 0.3s;
+}
+img:hover {
+  transform: scale(1.1);
+}
+.img-wrapper {
+}

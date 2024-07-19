@@ -1,0 +1,5 @@
+*.exe
+.vscode
+node_modules/
+build/
+*.log
