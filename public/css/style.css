@@ -442,6 +442,9 @@ textarea {
 #contact .col {
   width: 50%;
 }
+#contact .col:last-child > * {
+  margin: 5px 0;
+}
 .icon,
 .icon img {
   width: 50px;
@@ -464,15 +467,87 @@ iframe {
   height: 200px;
   transition: 0.3s;
 }
-iframe:hover {
-  height: 250px;
+
+/* ---------BANER------------------- */
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
 }
+#logos {
+  height: 100px;
+  background-color: rgb(202, 202, 202);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  flex-wrap: nowrap;
+  position: relative;
+}
+#logos:hover .logos-slide {
+  animation-play-state: paused;
+}
+.logos-slide {
+  display: flex;
+  height: 100%;
+  animation: 20s slide infinite linear;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.logos-slide a {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logos-slide img {
+  height: 70%;
+  width: auto;
+  border-radius: 0;
+  margin: 0 60px;
+}
+#logos::before,
+#logos::after {
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  content: "";
+  z-index: 2;
+}
+#logos::before {
+  left: 0;
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 0),
+    rgb(202, 202, 202)
+  );
+}
+#logos::after {
+  right: 0;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgb(202, 202, 202)
+  );
+}
+/* -----------------CONTACT------------------ */
 #contact .col:last-child {
   height: 100%;
 }
 #contact .col:last-child {
-  flex-direction: row;
+  flex-direction: column;
   padding-left: 5%;
+}
+#email {
+  text-decoration: underline;
+  cursor: pointer;
+}
+#social {
+  display: flex;
+  align-items: center;
 }
 .fa-brands {
   font-size: 30px;
@@ -530,6 +605,10 @@ h5 {
   height: 50px;
   border-radius: 30px;
   margin-left: 10px;
+  transition: 0.3s;
+}
+#ams:hover {
+  transform: translateY(-5px);
 }
 .col-left {
   display: flex;
