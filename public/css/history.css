@@ -1,0 +1,51 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Comfortaa", sans-serif;
+}
+body {
+  background-color: #ff0044;
+}
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 20px;
+}
+h1,
+h2 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  color: gold;
+}
+h1 {
+  font-weight: 800;
+}
+h3 span {
+  font-weight: 700;
+  color: gold;
+}
+h3 {
+  color: white;
+  margin: 20px;
+}
+.row {
+  width: 60%;
+}
+p {
+  color: white;
+  text-align: justify;
+  margin: 30px 0;
+  font-weight: 500;
+}
+.period {
+  border: dashed 2px #fff;
+  border-radius: 30px;
+  padding: 40px;
+  margin: 30px;
+}
+.god h2 {
+  text-align: center;
+}
