@@ -21,7 +21,7 @@ nav {
   background-color: #ffffff;
   padding: 0 15%;
   height: 55px;
-  border-bottom: solid 2px #000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 h1 {
   font-size: 50px;
@@ -51,7 +51,7 @@ h1 {
 #home {
   height: calc(100vh - 55px);
   width: 100%;
-  background-image: url("../logos/pozadina8.png");
+  background-image: url("../logos/pozadina6.png");
   transition: background-image 3s;
   background-repeat: no-repeat;
   background-size: cover;
@@ -74,7 +74,7 @@ h1 {
 }
 #home h1 {
   text-align: center;
-  background-color: #ff0000;
+  background-color: #ff0044;
   padding: 40px;
   border-radius: 800px 30px;
   border: solid 5px black;
@@ -509,8 +509,7 @@ iframe {
   height: 100px;
   background-color: rgb(202, 202, 202);
   background-color: #fff;
-  border-top: solid 3px black;
-  border-bottom: solid 3px black;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 1);
   display: flex;
   align-items: center;
   overflow: hidden;

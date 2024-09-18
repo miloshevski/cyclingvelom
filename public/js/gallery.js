@@ -1,13 +1,17 @@
-// Add this to your gallery.js
+let currentIndex = 0; // current index
+let imagesArray = []; // image elements
 
 // Function to create fullscreen view
-function openFullscreen(img) {
+function openFullscreen(index) {
+  currentIndex = index; // Update current index
+
   const fullscreenDiv = document.createElement("div");
   fullscreenDiv.classList.add("fullscreen");
 
   // Create the img element for fullscreen
   const fullscreenImg = document.createElement("img");
-  fullscreenImg.src = img.src;
+  fullscreenImg.src = imagesArray[currentIndex].src;
+  fullscreenImg.classList.add("fullscreen-img");
 
   // Append the img to the fullscreen div
   fullscreenDiv.appendChild(fullscreenImg);
@@ -17,18 +21,37 @@ function openFullscreen(img) {
     document.body.removeChild(fullscreenDiv);
   });
 
-  // Append the fullscreen div to the body
+  // Add fullscreen div to body
   document.body.appendChild(fullscreenDiv);
+
+  // Focus on the fullscreen div for key event handling
+  fullscreenDiv.focus();
 }
 
 // Function to handle keydown event
 function handleKeydown(event) {
-  if (event.key === "Escape") {
-    const fullscreenDiv = document.querySelector(".fullscreen");
-    if (fullscreenDiv) {
+  const fullscreenDiv = document.querySelector(".fullscreen");
+  if (fullscreenDiv) {
+    if (event.key === "Escape") {
+      // Close fullscreen on Escape
       document.body.removeChild(fullscreenDiv);
+    } else if (event.key === "ArrowRight") {
+      // Navigate to next image
+      currentIndex = (currentIndex + 1) % imagesArray.length;
+      updateFullscreenImage();
+    } else if (event.key === "ArrowLeft") {
+      // Navigate to previous image
+      currentIndex =
+        (currentIndex - 1 + imagesArray.length) % imagesArray.length;
+      updateFullscreenImage();
     }
   }
+}
+
+// Function to update fullscreen image source when navigating
+function updateFullscreenImage() {
+  const fullscreenImg = document.querySelector(".fullscreen img");
+  fullscreenImg.src = imagesArray[currentIndex].src;
 }
 
 // Add event listener for keydown event
@@ -39,15 +62,18 @@ fetch("/images.json")
   .then((response) => response.json())
   .then((imagePaths) => {
     const gallery = document.getElementById("gallery");
-    imagePaths.forEach((path) => {
+    imagePaths.forEach((path, index) => {
       const imgWrapper = document.createElement("div");
       imgWrapper.classList.add("img-wrapper");
 
       const img = document.createElement("img");
       img.src = path;
 
+      // Add image to array
+      imagesArray.push(img);
+
       // Add click event to image
-      img.addEventListener("click", () => openFullscreen(img));
+      img.addEventListener("click", () => openFullscreen(index));
 
       imgWrapper.appendChild(img);
       gallery.appendChild(imgWrapper);

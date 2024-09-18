@@ -7,6 +7,47 @@
 body {
   background-color: #ff0044;
 }
+#logo {
+  width: 200px;
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: #ffffff;
+  padding: 0 15%;
+  height: 55px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+h1 {
+  font-size: 50px;
+  font-weight: 800;
+  color: white;
+}
+
+.menu {
+  list-style-type: none;
+}
+.tab-link {
+  text-decoration: none;
+  color: #000;
+  font-weight: 700;
+  font-family: "Roboto", sans-serif;
+}
+.tab-item {
+  display: inline-block;
+  padding: 10px;
+}
+.tab-link.active {
+  color: #ff0044;
+}
+.tab-link:hover {
+  color: #ff0044;
+}
 .container {
   width: 100%;
   display: flex;
@@ -19,6 +60,21 @@ h2 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 700;
   color: gold;
+}
+#lang img {
+  width: 30px;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+#lang {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 10px;
+  position: fixed;
+  right: 70px;
+  top: 100px;
 }
 h1 {
   font-weight: 800;
@@ -48,4 +104,7 @@ p {
 }
 .god h2 {
   text-align: center;
+}
+.mkd {
+  display: none;
 }
