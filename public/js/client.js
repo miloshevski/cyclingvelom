@@ -4,11 +4,15 @@ $(document).ready(function () {
     $(this).addClass("active");
   });
 });
-// Create the playSound function
+// Function to toggle the side menu
+function toggleSideMenu() {
+  const menu = $(".side-menu");
+  menu.toggleClass("hidden");
+}
+
 function playSound() {
-  // Create an audio element
-  const clickSound = new Audio("../majmune.mp3"); // Replace with the actual path to your sound file
-  // Play the sound
-  clickSound.currentTime = 0; // Reset sound to the beginning
-  clickSound.play(); // Play the sound
+  const clickSound = new Audio("../majmune.mp3");
+
+  clickSound.currentTime = 0;
+  clickSound.play();
 }

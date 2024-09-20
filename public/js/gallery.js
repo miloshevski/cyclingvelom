@@ -1,5 +1,6 @@
 let currentIndex = 0; // current index
 let imagesArray = []; // image elements
+let touchStartX = 0; // to track touch start position
 
 // Function to create fullscreen view
 function openFullscreen(index) {
@@ -19,6 +20,16 @@ function openFullscreen(index) {
   // Add event listener for closing fullscreen mode
   fullscreenDiv.addEventListener("click", () => {
     document.body.removeChild(fullscreenDiv);
+  });
+
+  // Add touch event listeners for swipe navigation
+  fullscreenDiv.addEventListener("touchstart", (event) => {
+    touchStartX = event.touches[0].clientX; // Record start position
+  });
+
+  fullscreenDiv.addEventListener("touchend", (event) => {
+    const touchEndX = event.changedTouches[0].clientX; // Record end position
+    handleSwipe(touchStartX, touchEndX); // Handle swipe
   });
 
   // Add fullscreen div to body
@@ -46,6 +57,19 @@ function handleKeydown(event) {
       updateFullscreenImage();
     }
   }
+}
+
+// Function to handle swipe navigation
+function handleSwipe(startX, endX) {
+  const threshold = 50; // Minimum swipe distance
+  if (startX - endX > threshold) {
+    // Swipe left
+    currentIndex = (currentIndex + 1) % imagesArray.length;
+  } else if (endX - startX > threshold) {
+    // Swipe right
+    currentIndex = (currentIndex - 1 + imagesArray.length) % imagesArray.length;
+  }
+  updateFullscreenImage();
 }
 
 // Function to update fullscreen image source when navigating
