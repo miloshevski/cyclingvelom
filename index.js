@@ -12,8 +12,16 @@ app.get("/", (req, res) => {
 });
 
 // Serve the gallery page
-app.get("/gallery.html", (req, res) => {
+app.get("/gallery", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "gallery.html"));
+});
+
+app.get("/history", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "history.html"));
+});
+
+app.get("/results", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "results.html"));
 });
 
 // Handle any other routes by serving a 404 page
