@@ -11,12 +11,6 @@ const galleryFile = path.join(__dirname, "gallery.json");
 //   require("dotenv").config();
 // }
 
-console.log("Cloudinary Config:", {
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -25,6 +19,12 @@ cloudinary.config({
   cloud_name: "ddahnrnmf",
   api_key: "624262112531424",
   api_secret: "bmwkvnDF6XO0f81ZqxgnGgV-0sg",
+});
+
+console.log("Cloudinary Config:", {
+  cloud_name: cloudinary.config().cloud_name,
+  api_key: cloudinary.config().api_key,
+  api_secret: cloudinary.config().api_secret,
 });
 
 // Set up Multer storage with Cloudinary
