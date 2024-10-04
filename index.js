@@ -7,8 +7,9 @@ const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const fs = require("fs");
 const galleryFile = path.join(__dirname, "gallery.json");
 
-dotenv.config(); // Load the .env file
-dotenv.config(); // Load environment variables
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 
 console.log("Cloudinary Config:", {
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
