@@ -8,6 +8,13 @@ const fs = require("fs");
 const galleryFile = path.join(__dirname, "gallery.json");
 
 dotenv.config(); // Load the .env file
+dotenv.config(); // Load environment variables
+
+console.log("Cloudinary Config:", {
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const app = express();
 const port = process.env.PORT || 3000;
