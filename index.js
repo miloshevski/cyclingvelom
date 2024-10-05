@@ -4,47 +4,31 @@ const dotenv = require("dotenv"); // Load environment variables
 const multer = require("multer"); // Handle file uploads
 const cloudinary = require("cloudinary").v2; // Use Cloudinary's Node SDK
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
-const fs = require("fs");
-const galleryFile = path.join(__dirname, "gallery.json");
-const { Client } = require('pg');
 const { Pool } = require('pg');
 
-// if (process.env.NODE_ENV !== "production") {
-//   require("dotenv").config();
-// }
-require("dotenv").config();
+dotenv.config(); // Load environment variables from .env file
 const app = express();
 const port = process.env.PORT || 3000;
 
-const client = new Client({
-  connectionString: process.env.DATABASE_URL, // Use your connection string from environment variables
-});
-process.on('exit', () => {
-  client.end();
-});
-
-
+// Create PostgreSQL connection pool
 const pool = new Pool({
-  connectionString: process.env.RENDER_DATABASE_URL,
+  connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false // Accept self-signed certificates
   }
 });
 
-
-// Example query
-pool.query('SELECT * FROM images', (err, res) => {
-    if (err) {
-        console.error('Error executing query', err.stack);
-    } else {
-        console.log(res.rows);
-    }
-});
-
-
-client.connect()
+// Connect to PostgreSQL and handle connection errors
+pool.connect()
   .then(() => console.log('Connected to PostgreSQL'))
   .catch(err => console.error('Connection error', err.stack));
+
+// Gracefully handle termination of the server
+process.on('SIGINT', async () => {
+  await pool.end();
+  console.log('PostgreSQL pool closed');
+  process.exit(0);
+});
 
 // Configure Cloudinary with environment variables
 cloudinary.config({
@@ -75,9 +59,8 @@ app.get("/", (req, res) => {
 // Serve the gallery page
 app.get("/gallery", async (req, res) => {
   try {
-    const result = await client.query('SELECT * FROM images ORDER BY true_id');
-    const images = result.rows; // Get the rows from the query result
-
+    const result = await pool.query('SELECT * FROM images ORDER BY true_id');
+    const images = result.rows;
     res.render(path.join(__dirname, "views", "gallery.ejs"), { images });
   } catch (error) {
     console.error("Error fetching images from the database:", error);
@@ -85,12 +68,15 @@ app.get("/gallery", async (req, res) => {
   }
 });
 
+// Serve additional pages
 app.get("/history", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "history.html"));
 });
+
 app.get("/results", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "results.html"));
 });
+
 app.get("/upload", (req, res) => {
   res.render(path.join(__dirname, "views", "upload.ejs"));
 });
@@ -103,19 +89,16 @@ app.post("/upload", upload.array("images", 10), async (req, res) => {
     return res.status(400).send("No files uploaded.");
   }
 
-  // Log each uploaded file URL and store them in an array
   const uploadedUrls = files.map((file) => file.path);
   console.log("Uploaded Image URLs:", uploadedUrls);
 
   try {
-    // Insert each uploaded URL into the database
-    const insertPromises = uploadedUrls.map(async (url) => {
-      await client.query('INSERT INTO images (url) VALUES ($1)', [url]);
+    const insertPromises = uploadedUrls.map(url => {
+      return pool.query('INSERT INTO images (url) VALUES ($1)', [url]);
     });
     await Promise.all(insertPromises);
     console.log("URLs inserted into the database");
 
-    // Send an HTML response with a success alert and list of uploaded URLs
     res.send(`
       <script>
         alert("Images uploaded successfully!");
@@ -129,12 +112,12 @@ app.post("/upload", upload.array("images", 10), async (req, res) => {
   }
 });
 
-
 // Handle any other routes by serving a 404 page
 app.use((req, res) => {
   res.status(404).send("Page not found");
 });
 
+// Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

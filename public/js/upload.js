@@ -57,4 +57,4 @@ function removeImage(index) {
   // Trigger the change event to update the gallery
   fileInput.dispatchEvent(new Event("change"));
 }
-console.log("Asdd");
+
