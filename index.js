@@ -10,11 +10,16 @@ dotenv.config(); // Load environment variables from .env file
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Create PostgreSQL connection pool
+// Log environment variables to check if they're loaded correctly
+console.log("DATABASE_URL:", process.env.DATABASE_URL);
+console.log("CLOUDINARY_CLOUD_NAME:", process.env.CLOUDINARY_CLOUD_NAME);
+console.log("CLOUDINARY_API_KEY:", process.env.CLOUDINARY_API_KEY);
+console.log("CLOUDINARY_API_SECRET:", process.env.CLOUDINARY_API_SECRET);
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL, // or your connection string
   ssl: {
-    rejectUnauthorized: false // Accept self-signed certificates
+    rejectUnauthorized: false // This line is important for self-signed certificates
   }
 });
 
