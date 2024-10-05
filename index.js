@@ -7,6 +7,7 @@ const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const fs = require("fs");
 const galleryFile = path.join(__dirname, "gallery.json");
 const { Client } = require('pg');
+const { Pool } = require('pg');
 
 // if (process.env.NODE_ENV !== "production") {
 //   require("dotenv").config();
@@ -22,13 +23,14 @@ process.on('exit', () => {
   client.end();
 });
 
-const { Pool } = require('pg');
+
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false, // Change this to true in production for security
-    },
+  connectionString: process.env.RENDER_DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false // Accept self-signed certificates
+  }
 });
+
 
 // Example query
 pool.query('SELECT * FROM images', (err, res) => {
