@@ -10,15 +10,15 @@ const galleryFile = path.join(__dirname, "gallery.json");
 // if (process.env.NODE_ENV !== "production") {
 //   require("dotenv").config();
 // }
-
+require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Configure Cloudinary with environment variables
 cloudinary.config({
-  cloud_name: "ddahnrnmf",
-  api_key: "624262112531424",
-  api_secret: "bmwkvnDF6XO0f81ZqxgnGgV-0sg",
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 console.log("Cloudinary Config:", {

@@ -44,7 +44,8 @@ html {
   align-items: center;
   justify-content: space-around;
   min-height: 60%;
-  width: 30%;
+  min-width: 30%;
+  padding: 0 5%;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
@@ -53,6 +54,10 @@ label[for="imageFiles"] {
   border: dashed rgb(0, 94, 255) 2px;
   border-radius: 20px;
   cursor: pointer;
+  transition: 0.3s;
+}
+label[for="imageFiles"]:hover {
+ box-shadow: 0 0 10px rgba(0, 94, 255,1);
 }
 button {
   padding: 20px;
@@ -60,8 +65,13 @@ button {
   border-radius: 20px;
   font-weight: bold;
   cursor: pointer;
+  transition: 0.3s;
+}
+button:hover{
+  box-shadow: 0 0 10px #000;
 }
 form {
   display: flex;
-  column-gap: 50px;
+  justify-content: space-around;
+  width: 100%;
 }
