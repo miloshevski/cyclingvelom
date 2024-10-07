@@ -59,22 +59,22 @@
       <!-- <img id="close" onclick="toggleSideMenu()" src="logos/close.svg" alt=""> -->
       <ul class="menu aside">
         <li class="tab-item">
-          <a onclick="toggleSideMenu()" href="#home" class="tab-link-aside">HOME</a>
+          <a onclick="toggleSideMenu()" href="/" class="tab-link-aside">HOME</a>
         </li>
         <li class="tab-item">
-          <a onclick="toggleSideMenu()" href="#about" class="tab-link-aside">ABOUT</a>
+          <a onclick="toggleSideMenu()" href="/#about" class="tab-link-aside">ABOUT</a>
         </li>
         <li class="tab-item">
-          <a onclick="toggleSideMenu()" href="#history" class="tab-link-aside">HISTORY</a>
+          <a onclick="toggleSideMenu()" href="/history" class="tab-link-aside">HISTORY</a>
         </li>
         <li class="tab-item">
-          <a onclick="toggleSideMenu()" href="#results" class="tab-link-aside">RESULTS</a>
+          <a onclick="toggleSideMenu()" href="/results" class="tab-link-aside">RESULTS</a>
         </li>
         <li class="tab-item">
-          <a onclick="toggleSideMenu()" href="#gallery" class="tab-link-aside">GALLERY</a>
+          <a onclick="toggleSideMenu()" href="/gallery" class="tab-link-aside">GALLERY</a>
         </li>
         <li class="tab-item">
-          <a onclick="toggleSideMenu()" href="#join" class="tab-link-aside">JOIN US</a>
+          <a onclick="toggleSideMenu()" href="/#join" class="tab-link-aside">JOIN US</a>
         </li>
       </ul>
       <span>&copy;2024 Aleksandar Miloshevski. All rights reserved.</span>
@@ -99,7 +99,7 @@
                 </p>
               </div>
               <div class="img-wrapper">
-                <img src="slike/IMG_3994.JPG" />
+                <img src="/logos/slika2.jpg" />
               </div>
             </div>
           </div>
@@ -151,21 +151,21 @@
             <h1>It all comes down to the results</h1>
             <div class="results-container">
               <div class="result-card">
-                <img src="slike/acechamp.jpg" alt="" class="result-img">
+                <img src="/logos/acechamp.jpg" alt="" class="result-img">
                 <p>
                   Aleksandar Miloshevski crossing the finish line and takes the win after 60km solo breakaway
                 </p>
                 <h2>RR National Championship</h2>
               </div>
               <div class="result-card">
-                <img src="slike/slika1.png" alt="" class="result-img">
+                <img src="/logos/slika1.png" alt="" class="result-img">
                 <p>
                  VELO-M dominating the RR National Championship winning every category
                 </p>
                 <h2>RR National Championship</h2>
               </div>
               <div class="result-card">
-                <img src="slike\230923-14-26-28-0061.jpg" alt="" class="result-img">
+                <img src="/logos/230923-14-26-28-0061.jpg" alt="" class="result-img">
                 <p>
                   Third place for Aleksandar Miloshevski at MTB Balkan Championship in Elite category
                 </p>
@@ -179,25 +179,25 @@
         <div class="container">
           <div class="row">
             <h1>A picture is worth a thousand words</h1>
-            <h2>
-              No need to read, just take a look at our gallery
-            </h2>
+            <h2>No need to read, just take a look at our gallery</h2>
+            
             <div class="gallery-wrapper">
-              <div class="img-wrapper">
-                <img src="slike/FB_IMG_1693326351042.jpg" />
-              </div>
-              <div class="img-wrapper">
-                <img src="slike/IMG_8687.JPG" />
-              </div>
-              <div class="img-wrapper">
-                <img src="slike/FB_IMG_1693505139166.jpg" />
-              </div>
-              
+              <% if (latestImages && latestImages.length > 0) { %>
+                <% latestImages.forEach(function(image) { %>
+                  <div class="img-wrapper">
+                    <img src="<%= image.url %>" alt="Gallery Image" />
+                  </div>
+                <% }); %>
+              <% } else { %>
+                <p>No images to display.</p>
+              <% } %>
             </div>
+            
             <button class="btn" onclick="location.href='gallery'">View Full Gallery</button>
           </div>
         </div>
       </section>
+      
       <section id="join">
         <div class="container">
           <div class="row">

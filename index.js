@@ -4,34 +4,29 @@ const dotenv = require("dotenv"); // Load environment variables
 const multer = require("multer"); // Handle file uploads
 const cloudinary = require("cloudinary").v2; // Use Cloudinary's Node SDK
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
-const { Pool } = require('pg');
+const { Pool } = require("pg");
 
 dotenv.config(); // Load environment variables from .env file
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Log environment variables to check if they're loaded correctly
-console.log("DATABASE_URL:", process.env.DATABASE_URL);
-console.log("CLOUDINARY_CLOUD_NAME:", process.env.CLOUDINARY_CLOUD_NAME);
-console.log("CLOUDINARY_API_KEY:", process.env.CLOUDINARY_API_KEY);
-console.log("CLOUDINARY_API_SECRET:", process.env.CLOUDINARY_API_SECRET);
-
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL, // or your connection string
   ssl: {
-    rejectUnauthorized: false // This line is important for self-signed certificates
-  }
+    rejectUnauthorized: false, // This line is important for self-signed certificates
+  },
 });
 
 // Connect to PostgreSQL and handle connection errors
-pool.connect()
-  .then(() => console.log('Connected to PostgreSQL'))
-  .catch(err => console.error('Connection error', err.stack));
+pool
+  .connect()
+  .then(() => console.log("Connected to PostgreSQL"))
+  .catch((err) => console.error("Connection error", err.stack));
 
 // Gracefully handle termination of the server
-process.on('SIGINT', async () => {
+process.on("SIGINT", async () => {
   await pool.end();
-  console.log('PostgreSQL pool closed');
+  console.log("PostgreSQL pool closed");
   process.exit(0);
 });
 
@@ -57,14 +52,28 @@ const upload = multer({ storage });
 app.use(express.static(path.join(__dirname, "public")));
 
 // Serve the main page
-app.get("/", (req, res) => {
-  res.render(path.join(__dirname, "views", "index.ejs"));
+app.get("/", async (req, res) => {
+  try {
+    // Fetch the last 3 images from the database
+    const result = await pool.query(
+      "SELECT * FROM images ORDER BY true_id DESC LIMIT 3;"
+    );
+    const latestImages = result.rows; // Get the rows returned by the query
+
+    // Pass the fetched images to the index.ejs template
+    res.render(path.join(__dirname, "views", "index.ejs"), { latestImages });
+  } catch (error) {
+    console.error("Error fetching latest images from the database:", error);
+    res.status(500).send("Error displaying homepage.");
+  }
 });
 
 // Serve the gallery page
 app.get("/gallery", async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM images ORDER BY true_id');
+    const result = await pool.query(
+      "SELECT * FROM images ORDER BY true_id DESC"
+    );
     const images = result.rows;
     res.render(path.join(__dirname, "views", "gallery.ejs"), { images });
   } catch (error) {
@@ -82,7 +91,7 @@ app.get("/results", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "results.html"));
 });
 
-app.get("/upload", (req, res) => {
+app.get("/gallery/upload", (req, res) => {
   res.render(path.join(__dirname, "views", "upload.ejs"));
 });
 
@@ -95,20 +104,17 @@ app.post("/upload", upload.array("images", 10), async (req, res) => {
   }
 
   const uploadedUrls = files.map((file) => file.path);
-  console.log("Uploaded Image URLs:", uploadedUrls);
 
   try {
-    const insertPromises = uploadedUrls.map(url => {
-      return pool.query('INSERT INTO images (url) VALUES ($1)', [url]);
+    const insertPromises = uploadedUrls.map((url) => {
+      return pool.query("INSERT INTO images (url) VALUES ($1)", [url]);
     });
     await Promise.all(insertPromises);
-    console.log("URLs inserted into the database");
 
     res.send(`
       <script>
         alert("Images uploaded successfully!");
-        console.log("Uploaded URLs: ", ${JSON.stringify(uploadedUrls)});
-        window.location.href = "/upload"; // Redirect back to the upload page
+        window.location.href = "/gallery/upload"; // Redirect back to the upload page
       </script>
     `);
   } catch (error) {

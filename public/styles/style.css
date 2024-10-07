@@ -9,9 +9,6 @@
   overflow-x: hidden;
 }
 
-#logo {
-  width: 200px;
-}
 nav {
   display: flex;
   justify-content: space-between;

@@ -2,26 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gallery</title>
-    <link
-      rel="stylesheet"
-      href="styles/gallery.css" />
-    <script
-      src="js/gallery.js"
-      defer></script>
+    <link rel="stylesheet" href="styles/gallery.css" />
+    <script src="js/gallery.js" defer></script>
     <!-- Added defer for better loading performance -->
   </head>
   <body>
+    <h1>Gallery</h1>
     <div class="container">
       <div id="gallery">
         <% images.forEach(image => { %>
         <div class="gallery-item">
-          <img
-            src="<%= image.url %>"
-            alt="Image" />
+          <img src="<%= image.url %>" alt="Image" />
         </div>
         <% }) %>
       </div>
