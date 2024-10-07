@@ -846,6 +846,7 @@ ul.menu.aside {
   #home {
     margin-top: 55px;
     background-image: url("../logos/telefon-bg.png");
+    background-size: cover;
   }
   #home h1 {
     font-size: 40px;

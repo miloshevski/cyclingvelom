@@ -6,6 +6,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #ececec;
 }
 #gallery {
   display: flex;
@@ -48,6 +49,7 @@ html {
   padding: 0 5%;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  background-color: #fae7b3;
 }
 label[for="imageFiles"] {
   padding: 20px;
@@ -57,7 +59,7 @@ label[for="imageFiles"] {
   transition: 0.3s;
 }
 label[for="imageFiles"]:hover {
- box-shadow: 0 0 10px rgba(0, 94, 255,1);
+  box-shadow: 0 0 10px rgba(0, 94, 255, 1);
 }
 button {
   padding: 20px;
@@ -67,7 +69,7 @@ button {
   cursor: pointer;
   transition: 0.3s;
 }
-button:hover{
+button:hover {
   box-shadow: 0 0 10px #000;
 }
 form {
@@ -75,8 +77,8 @@ form {
   justify-content: space-around;
   width: 100%;
 }
-@media (max-width:500px){
-  .container{
+@media (max-width: 500px) {
+  .container {
     width: 100%;
   }
 }

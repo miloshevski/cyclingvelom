@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/uploadResult.css" />
+    <title>Upload Result</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="forma">
+        <h1>Upload Result</h1>
+        <form
+          action="/results/upload"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            id="image"
+            required
+            style="display: none"
+          />
+          <label for="image">Add Thumbnail</label>
+          <input
+            type="text"
+            name="heading"
+            placeholder="Result Heading"
+            required
+          />
+          <textarea
+            name="description"
+            placeholder="Result Description"
+            required
+          ></textarea>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+    <script src="/js/uploadResult.js"></script>
+  </body>
+</html>

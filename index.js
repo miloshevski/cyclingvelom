@@ -1,19 +1,60 @@
 const express = require("express");
 const path = require("path");
-const dotenv = require("dotenv"); // Load environment variables
-const multer = require("multer"); // Handle file uploads
-const cloudinary = require("cloudinary").v2; // Use Cloudinary's Node SDK
+const dotenv = require("dotenv");
+const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const { Pool } = require("pg");
+const session = require("express-session");
+const bcrypt = require("bcrypt");
 
-dotenv.config(); // Load environment variables from .env file
+dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Middleware to parse URL-encoded data
+app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  session({
+    secret: "your_secret_key",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+// Mock user data
+const users = [
+  {
+    username: "fiziksmen",
+    password: process.env.ADMIN_PW,
+  },
+];
+
+// Ensure password is hashed correctly
+const saltRounds = 10; // You can adjust this for more security
+// Uncomment this section to generate a hash for the password "firebird"
+// bcrypt.hash("firebird", saltRounds, (err, hash) => {
+//   if (err) {
+//     console.error(err);
+//     return;
+//   }
+//   console.log(hash); // Use this hash in your users array
+// });
+
+const isAdmin = (req, res, next) => {
+  if (req.session.user) {
+    next(); // User is logged in
+  } else {
+    req.session.redirectTo = req.originalUrl; // Store the original URL to redirect after login
+    res.redirect("/login"); // Redirect to login page
+  }
+};
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL, // or your connection string
+  connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false, // This line is important for self-signed certificates
+    rejectUnauthorized: false,
   },
 });
 
@@ -30,7 +71,7 @@ process.on("SIGINT", async () => {
   process.exit(0);
 });
 
-// Configure Cloudinary with environment variables
+// Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -41,8 +82,8 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "gallery", // Optional folder name in Cloudinary
-    allowed_formats: ["jpg", "png", "jpeg"], // Accept only specific formats
+    folder: "gallery",
+    allowed_formats: ["jpg", "png", "jpeg"],
   },
 });
 
@@ -51,19 +92,30 @@ const upload = multer({ storage });
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, "public")));
 
-// Serve the main page
 app.get("/", async (req, res) => {
   try {
     // Fetch the last 3 images from the database
-    const result = await pool.query(
+    const imagesResult = await pool.query(
       "SELECT * FROM images ORDER BY true_id DESC LIMIT 3;"
     );
-    const latestImages = result.rows; // Get the rows returned by the query
+    const latestImages = imagesResult.rows; // Get the rows returned by the images query
 
-    // Pass the fetched images to the index.ejs template
-    res.render(path.join(__dirname, "views", "index.ejs"), { latestImages });
+    // Fetch the last 3 results from the database
+    const resultsQuery = await pool.query(
+      "SELECT * FROM results ORDER BY id DESC LIMIT 3;"
+    );
+    const latestResults = resultsQuery.rows; // Get the rows returned by the results query
+
+    // Pass the fetched images and results to the index.ejs template
+    res.render(path.join(__dirname, "views", "index.ejs"), {
+      latestImages,
+      latestResults,
+    });
   } catch (error) {
-    console.error("Error fetching latest images from the database:", error);
+    console.error(
+      "Error fetching latest images or results from the database:",
+      error
+    );
     res.status(500).send("Error displaying homepage.");
   }
 });
@@ -87,12 +139,54 @@ app.get("/history", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "history.html"));
 });
 
-app.get("/results", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "results.html"));
+app.get("/results", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM results ORDER BY id DESC;");
+    const results = result.rows;
+    res.render(path.join(__dirname, "views", "results.ejs"), { results });
+  } catch (error) {
+    console.error("Error fetching results from the database:", error);
+    res.status(500).send("Error fetching results.");
+  }
 });
 
-app.get("/gallery/upload", (req, res) => {
+app.get("/gallery/upload", isAdmin, (req, res) => {
   res.render(path.join(__dirname, "views", "upload.ejs"));
+});
+
+app.get("/results/upload", isAdmin, (req, res) => {
+  res.render(path.join(__dirname, "views", "uploadResult.ejs"));
+});
+
+app.get("/login", (req, res) => {
+  const error = req.query.error || null; // Get the error message from the query params
+  res.render(path.join(__dirname, "views", "login.ejs"), { error });
+});
+
+// Updated login route
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+
+  const user = users.find((u) => u.username === username);
+
+  if (user) {
+    // Compare hashed password
+    bcrypt.compare(password, user.password, (err, result) => {
+      if (result) {
+        // If password is correct, store user info in session
+        req.session.user = user;
+
+        // Redirect to the originally requested page or the homepage
+        const redirectTo = req.session.redirectTo || "/"; // Use stored URL or default to "/"
+        delete req.session.redirectTo; // Clear the stored URL after using it
+        return res.redirect(redirectTo);
+      } else {
+        return res.render("login", { error: "Invalid password" });
+      }
+    });
+  } else {
+    return res.render("login", { error: "User not found" });
+  }
 });
 
 // Image upload route
@@ -111,15 +205,30 @@ app.post("/upload", upload.array("images", 10), async (req, res) => {
     });
     await Promise.all(insertPromises);
 
-    res.send(`
-      <script>
-        alert("Images uploaded successfully!");
-        window.location.href = "/gallery/upload"; // Redirect back to the upload page
-      </script>
-    `);
+    // Instead of sending a script, just send a success response
+    res.redirect("/gallery"); // Redirect back to the upload page
   } catch (error) {
     console.error("Error inserting URLs into the database:", error);
     res.status(500).send("Error saving image URLs to the database.");
+  }
+});
+
+app.post("/results/upload", upload.single("image"), async (req, res) => {
+  const { heading, description } = req.body;
+  const imageUrl = req.file.path; // Get uploaded image URL from Cloudinary
+
+  try {
+    // Insert result into the database
+    await pool.query(
+      "INSERT INTO results (image_url, heading, description) VALUES ($1, $2, $3)",
+      [imageUrl, heading, description]
+    );
+    console.log("Result added to the database");
+
+    res.redirect("/results");
+  } catch (error) {
+    console.error("Error saving result to the database:", error);
+    res.status(500).send("Error saving result.");
   }
 });
 

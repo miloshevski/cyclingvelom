@@ -150,29 +150,16 @@
           <div class="row">
             <h1>It all comes down to the results</h1>
             <div class="results-container">
-              <div class="result-card">
-                <img src="/logos/acechamp.jpg" alt="" class="result-img">
-                <p>
-                  Aleksandar Miloshevski crossing the finish line and takes the win after 60km solo breakaway
-                </p>
-                <h2>RR National Championship</h2>
-              </div>
-              <div class="result-card">
-                <img src="/logos/slika1.png" alt="" class="result-img">
-                <p>
-                 VELO-M dominating the RR National Championship winning every category
-                </p>
-                <h2>RR National Championship</h2>
-              </div>
-              <div class="result-card">
-                <img src="/logos/230923-14-26-28-0061.jpg" alt="" class="result-img">
-                <p>
-                  Third place for Aleksandar Miloshevski at MTB Balkan Championship in Elite category
-                </p>
-                <h2>MTB Balkan Championship</h2>
-              </div>
+              <% latestResults.forEach(result => { %>
+                <div class="result-card">
+                  <img src="<%= result.image_url %>" alt="" class="result-img">
+                  <h2><%= result.heading %></h2>
+                  <p><%= result.description %></p>
+                </div>
+              <% }) %>
             </div>
             <button class="btn" onclick="location.href='results'">View More</button>
+          </div>
         </div>
       </section>
       <section id="gallery">
