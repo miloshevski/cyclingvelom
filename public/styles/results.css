@@ -142,9 +142,16 @@ ul.menu.aside {
 }
 .tab-link-aside {
   text-decoration: none;
+  font-weight: 700;
 }
 .tab-item {
   text-align: center;
+}
+.upload-btn {
+  background-color: #ff0044;
+  color: #fff;
+  padding: 10px;
+  border-radius: 30px;
 }
 @media (max-width: 1000px) {
   #navbar {
@@ -162,5 +169,9 @@ ul.menu.aside {
   }
   .material-symbols-outlined {
     display: inline-block;
+  }
+  .upload-btn {
+    background-color: #fff;
+    color: #ff0044;
   }
 }

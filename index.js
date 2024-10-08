@@ -136,7 +136,7 @@ app.get("/gallery", async (req, res) => {
 
 // Serve additional pages
 app.get("/history", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "history.html"));
+  res.render(path.join(__dirname, "views", "history.ejs"));
 });
 
 app.get("/results", async (req, res) => {
