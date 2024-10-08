@@ -65,6 +65,6 @@ button:hover {
 
 @media (max-width: 500px) {
   .forma {
-    width: 100%;
+    width: 90%;
   }
 }
