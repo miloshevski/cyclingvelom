@@ -3,9 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   background-color: #ff0044;
 }
+
 #navbar span {
   color: #ff0044;
   font-size: 40px;
@@ -13,6 +15,7 @@ body {
   font-weight: 800;
   font-style: italic;
 }
+
 nav {
   display: flex;
   justify-content: space-between;
@@ -27,38 +30,46 @@ nav {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   transition: top 0.5s;
 }
+
 .menu {
   list-style-type: none;
 }
+
 .tab-link {
   text-decoration: none;
   color: #000000;
   font-weight: 700;
   font-family: "Roboto", sans-serif;
 }
+
 .tab-item {
   display: inline-block;
   padding: 10px;
 }
+
 .tab-link.active {
   color: #ff0044;
 }
+
 .tab-link:hover {
   color: #ff0044;
   font-weight: bold;
 }
+
 h1 {
   text-align: center;
   font-size: 50;
   font-family: Arial, Helvetica, sans-serif;
   color: gold;
 }
+
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
 }
+
 #gallery {
   width: 75%;
   display: grid;
@@ -66,12 +77,13 @@ h1 {
   grid-template-rows: auto;
   gap: 20px;
 }
+
 img {
   width: 100%;
+  height: auto; /* Maintain aspect ratio */
   transition: 0.3s;
-}
-img:hover {
-  transform: scale(1.1);
+  object-fit: cover; /* Prevent stretching */
+  cursor: pointer;
 }
 .selected {
   position: absolute;
@@ -80,6 +92,7 @@ img:hover {
   left: 10%;
 }
 
+/* Fullscreen modal styles */
 .fullscreen {
   position: fixed;
   top: 0;
@@ -98,6 +111,64 @@ img:hover {
   max-height: 80%;
   object-fit: contain;
 }
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent background */
+  z-index: 1000; /* Ensure it is on top */
+}
+
+.modal-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.modal-content img {
+  max-height: 90%; /* Maintain aspect ratio */
+  max-width: 90%; /* Ensure image fits within the modal */
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+/* Navigation buttons for fullscreen */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  color: white;
+  font-size: 30px;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
 .side-menu {
   position: fixed;
   background-color: #ff0044;
@@ -112,41 +183,51 @@ img:hover {
   right: 0;
   box-shadow: -3px 0 10px 3px rgba(0, 0, 0, 0.5);
 }
+
 .side-menu span {
   font-size: 7px;
   color: #fff;
   bottom: 10px;
   position: fixed;
 }
+
 ul.menu.aside {
   display: flex;
   flex-direction: column;
 }
+
 .aside a {
   color: #fff;
 }
+
 .skrien {
   display: none;
 }
+
 .hidden {
   display: none;
   background-color: red;
 }
+
 #breadcrumbs {
   display: none;
 }
+
 .tab-link-aside {
   text-decoration: none;
 }
+
 .tab-item {
   text-align: center;
 }
+
 .upload-btn {
   background-color: #ff0044;
   border-radius: 30px;
   color: #fff;
   padding: 10px;
 }
+
 .upload-btn:hover {
   color: #fff;
 }
@@ -154,27 +235,35 @@ ul.menu.aside {
 @media (max-width: 500px) {
   .fullscreen img {
     max-width: 100%;
-    max-width: 100%;
+    max-height: 100%;
+  }
+  #navbar span {
+    font-size: 20px;
   }
   .fullscreen {
     background-color: rgba(0, 0, 0, 1);
   }
+
   #navbar {
     width: 100%;
     display: flex;
     justify-content: space-between;
     z-index: 1001;
   }
+
   #breadcrumbs {
     display: block;
     width: 40px;
   }
+
   .menu {
     display: none;
   }
+
   .material-symbols-outlined {
     display: inline-block;
   }
+
   .upload-btn {
     background-color: #ff0044;
     color: #ff0044;

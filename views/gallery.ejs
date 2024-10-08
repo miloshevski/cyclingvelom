@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gallery</title>
     <link rel="stylesheet" href="styles/gallery.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="js/gallery.js" defer></script>
     <!-- Added defer for better loading performance -->
   </head>
   <body>
@@ -86,12 +84,24 @@
     </div>
     <div class="container">
       <div id="gallery">
-        <% images.forEach(image => { %>
+        <% images.forEach((image, index) => { %>
+        <!-- Add `index` here -->
         <div class="gallery-item">
-          <img src="<%= image.url %>" alt="Image" />
+          <img src="<%= image.url %>" alt="Image" data-index="<%= index %>" />
         </div>
         <% }) %>
       </div>
     </div>
+
+    <div id="fullscreenModal" class="modal">
+      <span id="closeModal" class="close">&times;</span>
+      <div class="modal-content">
+        <img id="fullscreenImage" src="" alt="Fullscreen Image" />
+      </div>
+      <!-- Navigation buttons -->
+      <a class="prev">&#10094;</a>
+      <a class="next">&#10095;</a>
+    </div>
+    <script src="/js/gallery.js"></script>
   </body>
 </html>
