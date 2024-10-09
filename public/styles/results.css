@@ -54,10 +54,7 @@ h1 {
 .tab-link.active {
   color: #ff0044;
 }
-.tab-link:hover {
-  color: #ff0044;
-  font-weight: bold;
-}
+
 .container {
   width: 100%;
   display: flex;
@@ -151,7 +148,7 @@ ul.menu.aside {
   background-color: #ff0044;
   color: #fff;
   padding: 10px;
-  border-radius: 30px;
+  border-radius: 10px;
 }
 @media (max-width: 1000px) {
   #navbar {

@@ -46,9 +46,7 @@ h1 {
 .tab-link.active {
   color: #ff0044;
 }
-.tab-link:hover {
-  color: #ff0044;
-}
+
 #home {
   height: calc(100vh - 55px);
   margin-top: 55px;

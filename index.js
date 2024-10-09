@@ -123,16 +123,50 @@ app.get("/", async (req, res) => {
 // Serve the gallery page
 app.get("/gallery", async (req, res) => {
   try {
+    // Reset true_id to be sequential starting from 0
+    await pool.query("ALTER TABLE images ADD COLUMN temp_true_id SERIAL;");
+    await pool.query("UPDATE images SET true_id = temp_true_id;");
+    await pool.query("ALTER TABLE images DROP COLUMN temp_true_id;");
+
     const result = await pool.query(
-      "SELECT * FROM images ORDER BY true_id DESC"
+      "SELECT * FROM images ORDER BY true_id ASC"
     );
     const images = result.rows;
-    res.render(path.join(__dirname, "views", "gallery.ejs"), { images });
+    res.render(path.join(__dirname, "views", "gallery.ejs"), { images, session: req.session });
   } catch (error) {
     console.error("Error fetching images from the database:", error);
     res.status(500).send("Error fetching images.");
   }
 });
+
+
+app.post("/gallery/delete/:true_id", isAdmin, async (req, res) => {
+  const trueId = req.params.true_id; // Get the true_id from the URL
+
+  try {
+    // Fetch the image URL from the database to get the public ID
+    const imageResult = await pool.query("SELECT * FROM images WHERE true_id = $1", [trueId]);
+    const image = imageResult.rows[0];
+
+    if (image) {
+      const publicId = image.url.split("/").pop().split(".")[0]; // Extract the public ID from the URL
+
+      // Delete the image from Cloudinary
+      await cloudinary.uploader.destroy(publicId);
+
+      // Delete the image from the database
+      await pool.query("DELETE FROM images WHERE true_id = $1", [trueId]);
+      // Redirect back to the gallery page
+      res.redirect("/gallery");
+    } else {
+      res.status(404).send("Image not found");
+    }
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    res.status(500).send("Error deleting image.");
+  }
+});
+
 
 // Serve additional pages
 app.get("/history", (req, res) => {

@@ -30,7 +30,18 @@ nav {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   transition: top 0.5s;
 }
-
+.btn-danger{
+  padding: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+#upload-btn{
+  color: #fff;
+  background-color: #ff0044;
+  padding: 10px;
+  border-radius: 10px;
+}
 .menu {
   list-style-type: none;
 }
@@ -51,10 +62,6 @@ nav {
   color: #ff0044;
 }
 
-.tab-link:hover {
-  color: #ff0044;
-  font-weight: bold;
-}
 
 h1 {
   text-align: center;
@@ -221,16 +228,6 @@ ul.menu.aside {
   text-align: center;
 }
 
-.upload-btn {
-  background-color: #ff0044;
-  border-radius: 30px;
-  color: #fff;
-  padding: 10px;
-}
-
-.upload-btn:hover {
-  color: #fff;
-}
 
 @media (max-width: 500px) {
   .fullscreen img {
