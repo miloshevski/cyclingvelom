@@ -25,15 +25,18 @@ form {
 img {
   max-width: 150px;
 }
+h1,
+label {
+  color: #fff;
+}
 .forma {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
   min-width: 30%;
   padding: 20px;
-  border-radius: 10px;
   display: flex;
   flex-direction: column;
   row-gap: 30px;
-  background-color: #fae7b3;
+  background-color: #ff0044;
 }
 input,
 textarea {

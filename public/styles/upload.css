@@ -8,6 +8,12 @@ html {
   justify-content: center;
   background-color: #ececec;
 }
+h1,
+label,
+h3,
+a {
+  color: #fff;
+}
 #gallery {
   display: flex;
   flex-wrap: wrap;
@@ -47,13 +53,12 @@ html {
   min-height: 60%;
   min-width: 30%;
   padding: 0 5%;
-  border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-  background-color: #fae7b3;
+  background-color: #ff0044;
 }
 label[for="imageFiles"] {
   padding: 20px;
-  border: dashed rgb(0, 94, 255) 2px;
+  border: dashed rgb(255, 255, 255) 2px;
   border-radius: 20px;
   cursor: pointer;
   transition: 0.3s;

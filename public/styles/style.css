@@ -28,12 +28,26 @@ h1 {
   font-weight: 800;
   color: white;
 }
-
+img {
+  border-radius: 10px;
+}
 .menu {
   list-style-type: none;
 }
 .tab-link {
   text-decoration: none;
+  .results-container {
+    display: flex;
+    overflow: hidden;
+    width: 100%; /* Adjust as needed */
+  }
+
+  .result-card {
+    min-width: 100%; /* Each card takes up the full width of the container */
+    box-sizing: border-box;
+    transition: transform 0.5s ease-in-out;
+  }
+
   color: #000;
   font-weight: 700;
   font-family: "Roboto", sans-serif;
@@ -46,7 +60,17 @@ h1 {
 .tab-link.active {
   color: #ff0044;
 }
-
+#login-btn {
+  background-color: #ff0044;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+}
+#login-btn-aside {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+}
 #home {
   height: calc(100vh - 55px);
   margin-top: 55px;
@@ -100,10 +124,6 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-img {
-  width: 100%;
-  border-radius: 30px;
 }
 .row {
   width: 75%;
@@ -372,6 +392,7 @@ h4 {
   background-color: #ff0044;
   color: #fff;
 }
+
 /* GALLERY */
 #gallery {
   background-color: #ff0044;
@@ -400,13 +421,13 @@ h4 {
   width: 30%;
   overflow: hidden;
   position: relative;
-  border-radius: 30px;
+  border-radius: 10px;
+  object-fit: cover;
 }
 
 #gallery img {
   border-radius: 10px;
   width: 100%;
-  object-fit: cover;
   object-position: center;
 }
 #gallery .btn {
@@ -630,9 +651,7 @@ iframe {
   justify-content: center;
   align-items: center;
 }
-#flag:hover {
-  transform: translateY(-5px);
-}
+
 .flags {
   display: flex;
 }
@@ -669,16 +688,7 @@ h5 {
   flex-direction: column;
   align-items: flex-start;
 }
-/* footer {
-  height: 50px;
-  background-color: #202020;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-footer span {
-  color: #fff;
-} */
+
 /* RESPONSIVE */
 #close {
   width: 50px;

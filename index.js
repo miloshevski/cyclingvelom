@@ -129,23 +129,28 @@ app.get("/gallery", async (req, res) => {
     await pool.query("ALTER TABLE images DROP COLUMN temp_true_id;");
 
     const result = await pool.query(
-      "SELECT * FROM images ORDER BY true_id ASC"
+      "SELECT * FROM images ORDER BY true_id DESC"
     );
     const images = result.rows;
-    res.render(path.join(__dirname, "views", "gallery.ejs"), { images, session: req.session });
+    res.render(path.join(__dirname, "views", "gallery.ejs"), {
+      images,
+      session: req.session,
+    });
   } catch (error) {
     console.error("Error fetching images from the database:", error);
     res.status(500).send("Error fetching images.");
   }
 });
 
-
 app.post("/gallery/delete/:true_id", isAdmin, async (req, res) => {
   const trueId = req.params.true_id; // Get the true_id from the URL
 
   try {
     // Fetch the image URL from the database to get the public ID
-    const imageResult = await pool.query("SELECT * FROM images WHERE true_id = $1", [trueId]);
+    const imageResult = await pool.query(
+      "SELECT * FROM images WHERE true_id = $1",
+      [trueId]
+    );
     const image = imageResult.rows[0];
 
     if (image) {
@@ -166,7 +171,6 @@ app.post("/gallery/delete/:true_id", isAdmin, async (req, res) => {
     res.status(500).send("Error deleting image.");
   }
 });
-
 
 // Serve additional pages
 app.get("/history", (req, res) => {

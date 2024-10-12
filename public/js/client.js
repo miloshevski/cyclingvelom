@@ -31,3 +31,20 @@ $(window).on("scroll", function () {
 
   lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For mobile or negative scrolling
 });
+
+let currentIndex = 0;
+
+function scrollResults() {
+  const container = document.getElementById("resultsContainer");
+  const cards = document.querySelectorAll(".result-card");
+  const totalCards = cards.length;
+
+  // Calculate the width of one card (assuming they are all the same width)
+  const cardWidth = cards[0].offsetWidth;
+
+  // Increment the index and reset to 0 if at the end
+  currentIndex = (currentIndex + 1) % totalCards;
+
+  // Apply the translation to the container
+  container.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+}

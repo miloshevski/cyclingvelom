@@ -2,66 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gallery</title>
-    <link
-      rel="stylesheet"
-      href="styles/gallery.css" />
+    <link rel="stylesheet" href="styles/gallery.css" />
     <!-- Added defer for better loading performance -->
   </head>
   <body>
     <nav id="navbar">
-      <span>VELO-M Gallery</span>
+      <span>Gallery</span>
       <ul class="menu">
         <li class="tab-item">
-          <a
-            href="/"
-            class="tab-link"
-            >HOME</a
-          >
+          <a href="/" class="tab-link">Home</a>
         </li>
         <li class="tab-item">
-          <a
-            href="/#about"
-            class="tab-link"
-            >ABOUT</a
-          >
+          <a href="/#about" class="tab-link">About</a>
         </li>
         <li class="tab-item">
-          <a
-            href="/history"
-            class="tab-link"
-            >HISTORY</a
-          >
+          <a href="/history" class="tab-link">History</a>
         </li>
         <li class="tab-item">
-          <a
-            href="/results"
-            class="tab-link"
-            >RESULTS</a
-          >
+          <a href="/results" class="tab-link">Results</a>
         </li>
         <li class="tab-item">
-          <a
-            href="/gallery"
-            class="tab-link"
-            >GALLERY</a
-          >
+          <a href="/gallery" class="tab-link">Gallery</a>
         </li>
         <li class="tab-item">
-          <a
-            href="/#join"
-            class="tab-link"
-            >JOIN US</a
-          >
+          <a href="/#join" class="tab-link">Contact</a>
         </li>
         <li class="tab-item">
-          <a
-            href="/gallery/upload"
-            class="tab-link"
-            id="upload-btn"
+          <a href="/gallery/upload" class="tab-link" id="upload-btn"
             >Upload Image</a
           >
         </li>
@@ -70,58 +39,37 @@
         onclick="toggleSideMenu()"
         id="breadcrumbs"
         src="logos/breadcrumbs.svg"
-        alt="" />
+        alt=""
+      />
     </nav>
-    <div
-      onclick="toggleSideMenu()"
-      class="side-menu hidden">
+    <div onclick="toggleSideMenu()" class="side-menu hidden">
       <!-- <img id="close" onclick="toggleSideMenu()" src="logos/close.svg" alt=""> -->
       <ul class="menu aside">
         <li class="tab-item">
-          <a
-            onclick="toggleSideMenu()"
-            href="/"
-            class="tab-link-aside"
-            >HOME</a
-          >
+          <a onclick="toggleSideMenu()" href="/" class="tab-link-aside">HOME</a>
         </li>
         <li class="tab-item">
-          <a
-            onclick="toggleSideMenu()"
-            href="/#about"
-            class="tab-link-aside"
+          <a onclick="toggleSideMenu()" href="/#about" class="tab-link-aside"
             >ABOUT</a
           >
         </li>
         <li class="tab-item">
-          <a
-            onclick="toggleSideMenu()"
-            href="/history"
-            class="tab-link-aside"
+          <a onclick="toggleSideMenu()" href="/history" class="tab-link-aside"
             >HISTORY</a
           >
         </li>
         <li class="tab-item">
-          <a
-            onclick="toggleSideMenu()"
-            href="/results"
-            class="tab-link-aside"
+          <a onclick="toggleSideMenu()" href="/results" class="tab-link-aside"
             >RESULTS</a
           >
         </li>
         <li class="tab-item">
-          <a
-            onclick="toggleSideMenu()"
-            href="/gallery"
-            class="tab-link-aside"
+          <a onclick="toggleSideMenu()" href="/gallery" class="tab-link-aside"
             >GALLERY</a
           >
         </li>
         <li class="tab-item">
-          <a
-            onclick="toggleSideMenu()"
-            href="/#join"
-            class="tab-link-aside"
+          <a onclick="toggleSideMenu()" href="/#join" class="tab-link-aside"
             >JOIN US</a
           >
         </li>
@@ -140,21 +88,20 @@
       <div id="gallery">
         <% images.forEach((image, index) => { %>
         <div class="gallery-item">
-          <img
-            src="<%= image.url %>"
-            alt="Image"
-            data-index="<%= index %>" />
+          <img src="<%= image.url %>" alt="Image" data-index="<%= index %>" />
 
           <% if (session.user) { %>
           <!-- Check if the user is logged in -->
           <form
             action="/gallery/delete/<%= image.true_id %>"
             method="POST"
-            style="display: inline">
+            style="display: inline"
+          >
             <button
               type="submit"
               class="btn btn-danger"
-              onclick="return confirm('Are you sure you want to delete this image?');">
+              onclick="return confirm('Are you sure you want to delete this image?');"
+            >
               Delete
             </button>
           </form>
@@ -165,19 +112,10 @@
       </div>
     </div>
 
-    <div
-      id="fullscreenModal"
-      class="modal">
-      <span
-        id="closeModal"
-        class="close"
-        >&times;</span
-      >
+    <div id="fullscreenModal" class="modal">
+      <span id="closeModal" class="close">&times;</span>
       <div class="modal-content">
-        <img
-          id="fullscreenImage"
-          src=""
-          alt="Fullscreen Image" />
+        <img id="fullscreenImage" src="" alt="Fullscreen Image" />
       </div>
       <!-- Navigation buttons -->
       <a class="prev">&#10094;</a>
