@@ -44,9 +44,11 @@
         <li class="tab-item">
           <a href="/#join" class="tab-link">Contact</a>
         </li>
+        <%if(session.user){%>
         <li class="tab-item">
           <a href="/results/upload" class="tab-link upload-btn">Add Result</a>
         </li>
+        <%}%>
       </ul>
       <img
         onclick="toggleSideMenu()"

@@ -105,7 +105,7 @@
                 </p>
               </div>
               <div class="img-wrapper">
-                <img src="/logos/slika2.jpg" />
+                <img src="/logos/slika1.png" />
               </div>
             </div>
           </div>
@@ -172,20 +172,18 @@
         <div class="container">
           <div class="row">
             <h1>A picture is worth a thousand words</h1>
-            <h2>No need to read, just take a look at our gallery</h2>
-            
+            <h2>No need to read, just take a look at our gallery</h2>           
             <div class="gallery-wrapper">
               <% if (latestImages && latestImages.length > 0) { %>
                 <% latestImages.forEach(function(image) { %>
                   <div class="img-wrapper">
-                    <img src="<%= image.url %>" alt="Gallery Image" />
+                    <img src="<%= image.image_url %>" alt="Gallery Image" />
                   </div>
                 <% }); %>
               <% } else { %>
                 <p>No images to display.</p>
               <% } %>
             </div>
-            
             <button class="btn" onclick="location.href='gallery'">View Full Gallery</button>
           </div>
         </div>

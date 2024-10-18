@@ -11,6 +11,8 @@ const bcrypt = require("bcrypt");
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 // Middleware to parse URL-encoded data
 app.use(express.urlencoded({ extended: true }));
@@ -33,14 +35,6 @@ const users = [
 
 // Ensure password is hashed correctly
 const saltRounds = 10; // You can adjust this for more security
-// Uncomment this section to generate a hash for the password "firebird"
-// bcrypt.hash("firebird", saltRounds, (err, hash) => {
-//   if (err) {
-//     console.error(err);
-//     return;
-//   }
-//   console.log(hash); // Use this hash in your users array
-// });
 
 const isAdmin = (req, res, next) => {
   if (req.session.user) {
@@ -53,11 +47,7 @@ const isAdmin = (req, res, next) => {
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
 });
-
 // Connect to PostgreSQL and handle connection errors
 pool
   .connect()
@@ -96,7 +86,7 @@ app.get("/", async (req, res) => {
   try {
     // Fetch the last 3 images from the database
     const imagesResult = await pool.query(
-      "SELECT * FROM images ORDER BY true_id DESC LIMIT 3;"
+      "SELECT image_url FROM images ORDER BY created_at DESC LIMIT 3;"
     );
     const latestImages = imagesResult.rows; // Get the rows returned by the images query
 
@@ -120,47 +110,47 @@ app.get("/", async (req, res) => {
   }
 });
 
+async function getImagesFromDatabase() {
+  try {
+    const result = await pool.query("SELECT * FROM images");
+    return result.rows;
+  } catch (error) {
+    console.error("Error fetching images from database:", error);
+    throw error;
+  }
+}
 // Serve the gallery page
 app.get("/gallery", async (req, res) => {
   try {
-    // Reset true_id to be sequential starting from 0
-    await pool.query("ALTER TABLE images ADD COLUMN temp_true_id SERIAL;");
-    await pool.query("UPDATE images SET true_id = temp_true_id;");
-    await pool.query("ALTER TABLE images DROP COLUMN temp_true_id;");
-
-    const result = await pool.query(
-      "SELECT * FROM images ORDER BY true_id DESC"
+    const { rows: images } = await pool.query(
+      "SELECT * FROM images ORDER BY id DESC"
     );
-    const images = result.rows;
-    res.render(path.join(__dirname, "views", "gallery.ejs"), {
-      images,
-      session: req.session,
-    });
+    console.log(images); // Debugging log
+    res.render("gallery", { images: images, session: req.session });
   } catch (error) {
     console.error("Error fetching images from the database:", error);
     res.status(500).send("Error fetching images.");
   }
 });
 
-app.post("/gallery/delete/:true_id", isAdmin, async (req, res) => {
-  const trueId = req.params.true_id; // Get the true_id from the URL
+app.post("/gallery/delete/:id", isAdmin, async (req, res) => {
+  const id = req.params.id; // Get the id from the URL
 
   try {
     // Fetch the image URL from the database to get the public ID
-    const imageResult = await pool.query(
-      "SELECT * FROM images WHERE true_id = $1",
-      [trueId]
-    );
+    const imageResult = await pool.query("SELECT * FROM images WHERE id = $1", [
+      id,
+    ]);
     const image = imageResult.rows[0];
 
     if (image) {
-      const publicId = image.url.split("/").pop().split(".")[0]; // Extract the public ID from the URL
+      const publicId = image.image_url.split("/").pop().split(".")[0]; // Extract the public ID from the URL
 
       // Delete the image from Cloudinary
       await cloudinary.uploader.destroy(publicId);
 
       // Delete the image from the database
-      await pool.query("DELETE FROM images WHERE true_id = $1", [trueId]);
+      await pool.query("DELETE FROM images WHERE id = $1", [id]);
       // Redirect back to the gallery page
       res.redirect("/gallery");
     } else {
@@ -181,7 +171,12 @@ app.get("/results", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM results ORDER BY id DESC;");
     const results = result.rows;
-    res.render(path.join(__dirname, "views", "results.ejs"), { results });
+
+    // Pass the session object to the EJS template
+    res.render(path.join(__dirname, "views", "results.ejs"), {
+      results,
+      session: req.session,
+    });
   } catch (error) {
     console.error("Error fetching results from the database:", error);
     res.status(500).send("Error fetching results.");
@@ -235,16 +230,20 @@ app.post("/upload", upload.array("images", 10), async (req, res) => {
     return res.status(400).send("No files uploaded.");
   }
 
+  // Get the URLs of the uploaded images
   const uploadedUrls = files.map((file) => file.path);
 
   try {
+    // Create an array of promises to insert each URL into the 'images' table
     const insertPromises = uploadedUrls.map((url) => {
-      return pool.query("INSERT INTO images (url) VALUES ($1)", [url]);
+      return pool.query("INSERT INTO images (image_url) VALUES ($1)", [url]);
     });
+
+    // Wait for all insertions to complete
     await Promise.all(insertPromises);
 
-    // Instead of sending a script, just send a success response
-    res.redirect("/gallery"); // Redirect back to the upload page
+    // Redirect back to the gallery page after successful upload
+    res.redirect("/gallery");
   } catch (error) {
     console.error("Error inserting URLs into the database:", error);
     res.status(500).send("Error saving image URLs to the database.");

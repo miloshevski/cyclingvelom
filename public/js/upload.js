@@ -38,7 +38,7 @@ async function uploadImages() {
 
   if (response.ok) {
     alert("Images uploaded successfully!");
-    window.location.href = "/upload"; // Redirect back to the upload page
+    window.location.href = "/gallery"; // Redirect back to the gallery page
   } else {
     alert("Failed to upload images.");
   }
@@ -57,4 +57,3 @@ function removeImage(index) {
   // Trigger the change event to update the gallery
   fileInput.dispatchEvent(new Event("change"));
 }
-
