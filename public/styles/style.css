@@ -36,18 +36,6 @@ img {
 }
 .tab-link {
   text-decoration: none;
-  .results-container {
-    display: flex;
-    overflow: hidden;
-    width: 100%; /* Adjust as needed */
-  }
-
-  .result-card {
-    min-width: 100%; /* Each card takes up the full width of the container */
-    box-sizing: border-box;
-    transition: transform 0.5s ease-in-out;
-  }
-
   color: #000;
   font-weight: 700;
   font-family: "Roboto", sans-serif;
@@ -392,7 +380,9 @@ h4 {
   background-color: #ff0044;
   color: #fff;
 }
-
+.result-card *{
+  cursor: pointer;
+}
 /* GALLERY */
 #gallery {
   background-color: #ff0044;
@@ -740,6 +730,9 @@ ul.menu.aside {
   display: none;
 }
 @media (max-width: 1000px) {
+  #login-btn-aside{
+    color: #ff0044;
+  }
   #navbar {
     width: 100%;
     display: flex;

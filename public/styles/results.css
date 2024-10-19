@@ -157,6 +157,9 @@ ul.menu.aside {
     justify-content: space-between;
     z-index: 1001;
   }
+  #navbar span{
+    font-size: 30px;
+  }
   #breadcrumbs {
     display: block;
     width: 40px;
