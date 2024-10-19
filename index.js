@@ -100,6 +100,7 @@ app.get("/", async (req, res) => {
     res.render(path.join(__dirname, "views", "index.ejs"), {
       latestImages,
       latestResults,
+      session: req.session
     });
   } catch (error) {
     console.error(
@@ -164,7 +165,7 @@ app.post("/gallery/delete/:id", isAdmin, async (req, res) => {
 
 // Serve additional pages
 app.get("/history", (req, res) => {
-  res.render(path.join(__dirname, "views", "history.ejs"));
+  res.render(path.join(__dirname, "views", "history.ejs"),{session: req.session});
 });
 
 app.get("/results", async (req, res) => {

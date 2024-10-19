@@ -2,24 +2,41 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      rel="stylesheet" />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="js/results.js"></script>
-    <link rel="stylesheet" href="/styles/results.css" />
+    <link
+      rel="stylesheet"
+      href="/styles/results.css" />
     <title>VELO-M TERMALIFT</title>
   </head>
   <body>
@@ -27,26 +44,54 @@
       <span>Results</span>
       <ul class="menu">
         <li class="tab-item">
-          <a href="/" class="tab-link">Home</a>
+          <a
+            href="/"
+            class="tab-link"
+            >Home</a
+          >
         </li>
         <li class="tab-item">
-          <a href="/#about" class="tab-link">About</a>
+          <a
+            href="/#about"
+            class="tab-link"
+            >About</a
+          >
         </li>
         <li class="tab-item">
-          <a href="/history" class="tab-link">History</a>
+          <a
+            href="/history"
+            class="tab-link"
+            >History</a
+          >
         </li>
         <li class="tab-item">
-          <a href="/results" class="tab-link">Results</a>
+          <a
+            href="/results"
+            class="tab-link"
+            >Results</a
+          >
         </li>
         <li class="tab-item">
-          <a href="/gallery" class="tab-link">Gallery</a>
+          <a
+            href="/gallery"
+            class="tab-link"
+            >Gallery</a
+          >
         </li>
         <li class="tab-item">
-          <a href="/#join" class="tab-link">Contact</a>
+          <a
+            href="/#join"
+            class="tab-link"
+            >Contact</a
+          >
         </li>
         <%if(session.user){%>
         <li class="tab-item">
-          <a href="/results/upload" class="tab-link upload-btn">Add Result</a>
+          <a
+            href="/results/upload"
+            class="tab-link upload-btn"
+            >Add Result</a
+          >
         </li>
         <%}%>
       </ul>
@@ -54,40 +99,62 @@
         onclick="toggleSideMenu()"
         id="breadcrumbs"
         src="logos/breadcrumbs.svg"
-        alt=""
-      />
+        alt="" />
     </nav>
-    <div onclick="toggleSideMenu()" class="side-menu hidden">
+    <div
+      onclick="toggleSideMenu()"
+      class="side-menu hidden">
       <!-- <img id="close" onclick="toggleSideMenu()" src="logos/close.svg" alt=""> -->
       <ul class="menu aside">
         <li class="tab-item">
-          <a onclick="toggleSideMenu()" href="/" class="tab-link-aside">HOME</a>
+          <a
+            onclick="toggleSideMenu()"
+            href="/"
+            class="tab-link-aside"
+            >HOME</a
+          >
         </li>
         <li class="tab-item">
-          <a onclick="toggleSideMenu()" href="/#about" class="tab-link-aside"
+          <a
+            onclick="toggleSideMenu()"
+            href="/#about"
+            class="tab-link-aside"
             >ABOUT</a
           >
         </li>
         <li class="tab-item">
-          <a onclick="toggleSideMenu()" href="/history" class="tab-link-aside"
+          <a
+            onclick="toggleSideMenu()"
+            href="/history"
+            class="tab-link-aside"
             >HISTORY</a
           >
         </li>
         <li class="tab-item">
-          <a onclick="toggleSideMenu()" href="/results" class="tab-link-aside"
+          <a
+            onclick="toggleSideMenu()"
+            href="/results"
+            class="tab-link-aside"
             >RESULTS</a
           >
         </li>
         <li class="tab-item">
-          <a onclick="toggleSideMenu()" href="/gallery" class="tab-link-aside"
+          <a
+            onclick="toggleSideMenu()"
+            href="/gallery"
+            class="tab-link-aside"
             >GALLERY</a
           >
         </li>
         <li class="tab-item">
-          <a onclick="toggleSideMenu()" href="/#join" class="tab-link-aside"
+          <a
+            onclick="toggleSideMenu()"
+            href="/#join"
+            class="tab-link-aside"
             >JOIN US</a
           >
         </li>
+        <%if(session.user){%>
         <li class="tab-item">
           <a
             onclick="toggleSideMenu()"
@@ -97,6 +164,7 @@
             >ADD RESULT</a
           >
         </li>
+        <%}%>
       </ul>
       <span>&copy;2024 Aleksandar Miloshevski. All rights reserved.</span>
     </div>
@@ -107,7 +175,10 @@
             <% results.forEach(result => { %>
             <div class="result-card">
               <div class="img-wrapper">
-                <img src="<%= result.image_url %>" alt="" class="result-img" />
+                <img
+                  src="<%= result.image_url %>"
+                  alt=""
+                  class="result-img" />
               </div>
               <div class="text-wrapper">
                 <h2><%= result.heading %></h2>

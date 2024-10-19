@@ -52,9 +52,15 @@
         <li class="tab-item">
           <a href="/#join" class="tab-link">Contact</a>
         </li>
-        <li class="tab-item">
-          <a href="/login" id="login-btn" class="tab-link">Login</a>
-        </li>
+        <%if(!session.user){%>
+          <li class="tab-item">
+            <a id="login-btn" href="/login" class="tab-link-aside">Login</a>
+          </li>
+        <%}else{%>
+          <li class="tab-item">
+            <a id="login-btn" class="tab-link-aside">Logged In</a>
+          </li>
+        <%}%>
       </ul>
       <img onclick="toggleSideMenu()" id="breadcrumbs" src="logos/breadcrumbs.svg" alt="">
     </nav>
@@ -79,9 +85,15 @@
         <li class="tab-item">
           <a onclick="toggleSideMenu()" href="/#join" class="tab-link-aside">Contact</a>
         </li>
-        <li class="tab-item">
-          <a id="login-btn-aside" onclick="toggleSideMenu()" href="/login" class="tab-link-aside">Login</a>
-        </li>
+        <%if(!session.user){%>
+          <li class="tab-item">
+            <a id="login-btn-aside" onclick="toggleSideMenu()" href="/login" class="tab-link-aside">Login</a>
+          </li>
+        <%}else{%>
+          <li class="tab-item">
+            <a id="login-btn-aside" onclick="toggleSideMenu()" href="/login" class="tab-link-aside">Logged In</a>
+          </li>
+        <%}%>
       </ul>
       <span>&copy;2024 Aleksandar Miloshevski. All rights reserved.</span>
      </div>
@@ -158,9 +170,9 @@
             <div class="results-container">
               <% latestResults.forEach(result => { %>
                 <div class="result-card">
-                  <img src="<%= result.image_url %>" alt="" class="result-img">
-                  <h2><%= result.heading %></h2>
-                  <p><%= result.description %></p>
+                  <img src="<%= result.image_url %>" onclick="window.location='/results'" class="result-img">
+                  <h2 onclick="window.location='/results'"><%= result.heading %></h2>
+                  <!-- <p><%= result.description %></p> -->
                 </div>
               <% }) %>
             </div>
