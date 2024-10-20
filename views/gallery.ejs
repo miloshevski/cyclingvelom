@@ -4,7 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gallery</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles/gallery.css" />
+    <link rel="icon" href="logos/slika3.png" type="image/png" />
     <!-- Added defer for better loading performance -->
   </head>
   <body>
@@ -42,31 +47,31 @@
     <div onclick="toggleSideMenu()" class="side-menu hidden">
       <ul class="menu aside">
         <li class="tab-item">
-          <a onclick="toggleSideMenu()" href="/" class="tab-link-aside">HOME</a>
+          <a onclick="toggleSideMenu()" href="/" class="tab-link-aside">Home</a>
         </li>
         <li class="tab-item">
           <a onclick="toggleSideMenu()" href="/#about" class="tab-link-aside"
-            >ABOUT</a
+            >About</a
           >
         </li>
         <li class="tab-item">
           <a onclick="toggleSideMenu()" href="/history" class="tab-link-aside"
-            >HISTORY</a
+            >History</a
           >
         </li>
         <li class="tab-item">
           <a onclick="toggleSideMenu()" href="/results" class="tab-link-aside"
-            >RESULTS</a
+            >Results</a
           >
         </li>
         <li class="tab-item">
           <a onclick="toggleSideMenu()" href="/gallery" class="tab-link-aside"
-            >GALLERY</a
+            >Gallery</a
           >
         </li>
         <li class="tab-item">
           <a onclick="toggleSideMenu()" href="/#join" class="tab-link-aside"
-            >JOIN US</a
+            >Contact</a
           >
         </li>
         <% if (session.user) { %>
@@ -75,7 +80,7 @@
             onclick="toggleSideMenu()"
             href="/gallery/upload"
             class="tab-link-aside upload-btn"
-            >UPLOAD IMAGE</a
+            >Upload Image</a
           >
         </li>
         <% } %>
@@ -119,10 +124,10 @@
         >
         <div class="modal-content">
           <img id="fullscreenImage" src="" alt="Fullscreen Image" />
+          <a class="prev" aria-label="Previous image">&#10094;</a>
+          <a class="next" aria-label="Next image">&#10095;</a>
         </div>
         <!-- Navigation buttons -->
-        <a class="prev" aria-label="Previous image">&#10094;</a>
-        <a class="next" aria-label="Next image">&#10095;</a>
       </div>
     </div>
     <script src="/js/gallery.js" defer></script>

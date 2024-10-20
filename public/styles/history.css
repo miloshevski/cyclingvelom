@@ -11,7 +11,7 @@ body {
   color: #ff0044;
   font-size: 40px;
   font-family: "Roboto", sans-serif;
-  font-weight: 800;
+  font-weight: bold;
   font-style: italic;
 }
 nav {
@@ -41,7 +41,7 @@ h1 {
   text-decoration: none;
   color: #000;
   font-weight: 700;
-  font-family: "Roboto", sans-serif;
+  font-family: "Comfortaa", sans-serif;
 }
 .tab-item {
   display: inline-block;
@@ -194,7 +194,7 @@ p {
     justify-content: space-between;
     z-index: 1001;
   }
-  #navbar span{
+  #navbar span {
     font-size: 30px;
   }
   #breadcrumbs {

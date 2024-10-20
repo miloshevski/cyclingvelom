@@ -100,7 +100,7 @@ app.get("/", async (req, res) => {
     res.render(path.join(__dirname, "views", "index.ejs"), {
       latestImages,
       latestResults,
-      session: req.session
+      session: req.session,
     });
   } catch (error) {
     console.error(
@@ -126,7 +126,6 @@ app.get("/gallery", async (req, res) => {
     const { rows: images } = await pool.query(
       "SELECT * FROM images ORDER BY id DESC"
     );
-    console.log(images); // Debugging log
     res.render("gallery", { images: images, session: req.session });
   } catch (error) {
     console.error("Error fetching images from the database:", error);
@@ -165,7 +164,9 @@ app.post("/gallery/delete/:id", isAdmin, async (req, res) => {
 
 // Serve additional pages
 app.get("/history", (req, res) => {
-  res.render(path.join(__dirname, "views", "history.ejs"),{session: req.session});
+  res.render(path.join(__dirname, "views", "history.ejs"), {
+    session: req.session,
+  });
 });
 
 app.get("/results", async (req, res) => {

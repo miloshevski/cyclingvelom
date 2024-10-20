@@ -38,7 +38,7 @@ img {
   text-decoration: none;
   color: #000;
   font-weight: 700;
-  font-family: "Roboto", sans-serif;
+  font-family: "Comfortaa", sans-serif;
 }
 .tab-item {
   display: inline-block;
@@ -380,7 +380,7 @@ h4 {
   background-color: #ff0044;
   color: #fff;
 }
-.result-card *{
+.result-card * {
   cursor: pointer;
 }
 /* GALLERY */
@@ -730,7 +730,7 @@ ul.menu.aside {
   display: none;
 }
 @media (max-width: 1000px) {
-  #login-btn-aside{
+  #login-btn-aside {
     color: #ff0044;
   }
   #navbar {
