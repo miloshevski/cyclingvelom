@@ -1,9 +1,3 @@
-$(document).ready(function () {
-  $(".tab-link").click(function (event) {
-    $(".tab-link").removeClass("active");
-    $(this).addClass("active");
-  });
-});
 // Function to toggle the side menu
 function toggleSideMenu() {
   const menu = $(".side-menu");
@@ -48,3 +42,16 @@ function scrollResults() {
   // Apply the translation to the container
   container.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
 }
+window.addEventListener("scroll", () => {
+  const sections = document.querySelectorAll("section"); // Query for <section> elements
+  const navLinks = document.querySelectorAll(".tab-link");
+  const contactSection = document.getElementById("join"); // Adjust this to the ID of your contact section
+
+  sections.forEach((section, index) => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= 0 && rect.bottom > 0) {
+      navLinks.forEach((link) => link.classList.remove("active"));
+      navLinks[index].classList.add("active");
+    }
+  });
+});

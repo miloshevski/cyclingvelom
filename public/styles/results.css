@@ -140,6 +140,7 @@ ul.menu.aside {
 .tab-link-aside {
   text-decoration: none;
   font-weight: 700;
+  font-size: 14px;
 }
 .tab-item {
   text-align: center;
