@@ -25,17 +25,31 @@
             style="display: none"
           />
           <label for="image">Add Thumbnail</label>
+
           <input
             type="text"
             name="heading"
             placeholder="Result Heading"
             required
           />
+
           <textarea
             name="description"
             placeholder="Result Description"
             required
           ></textarea>
+
+          <!-- Dropdown for Type -->
+          <select name="type" required>
+            <option value="" disabled selected>Select Type</option>
+            <option value="road">Road</option>
+            <option value="mtb">MTB</option>
+            <option value="cx">CX</option>
+            <option value="other">Other</option>
+          </select>
+
+          <input type="date" name="date" required />
+
           <button type="submit">Submit</button>
         </form>
       </div>

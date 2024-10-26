@@ -253,17 +253,16 @@ app.post("/upload", upload.array("images", 10), async (req, res) => {
 });
 
 app.post("/results/upload", upload.single("image"), async (req, res) => {
-  const { heading, description } = req.body;
-  const imageUrl = req.file.path; // Get uploaded image URL from Cloudinary
+  const { heading, description, type, date } = req.body;
+  const imageUrl = req.file.path; // Adjust this if you're uploading to a service like Cloudinary
 
   try {
-    // Insert result into the database
+    // Save the result to the database
     await pool.query(
-      "INSERT INTO results (image_url, heading, description) VALUES ($1, $2, $3)",
-      [imageUrl, heading, description]
+      "INSERT INTO results (image_url, heading, description, type, date) VALUES ($1, $2, $3, $4, $5)",
+      [imageUrl, heading, description, type, date]
     );
     console.log("Result added to the database");
-
     res.redirect("/results");
   } catch (error) {
     console.error("Error saving result to the database:", error);

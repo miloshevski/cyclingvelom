@@ -50,6 +50,18 @@
           <a href="/results/upload" class="tab-link upload-btn">Add Result</a>
         </li>
         <%}%>
+        <li class="tab-item">
+          <div class="filter-container">
+            <label for="typeFilter">Filter by Type:</label>
+            <select id="typeFilter" onchange="filterResults()">
+              <option value="">All</option>
+              <option value="road">Road</option>
+              <option value="mtb">MTB</option>
+              <option value="cx">CX</option>
+              <option value="all">Other</option>
+            </select>
+          </div>
+        </li>
       </ul>
       <img
         onclick="toggleSideMenu()"
@@ -58,7 +70,7 @@
         alt=""
       />
     </nav>
-    <div onclick="toggleSideMenu()" class="side-menu hidden">
+    <div class="side-menu hidden">
       <!-- <img id="close" onclick="toggleSideMenu()" src="logos/close.svg" alt=""> -->
       <ul class="menu aside">
         <li class="tab-item">
@@ -100,6 +112,18 @@
           >
         </li>
         <%}%>
+        <li class="tab-item">
+          <div class="filter-container">
+            <label for="typeFilter">Filter by Type:</label>
+            <select id="typeFilter" onchange="filterResults()">
+              <option value="">All</option>
+              <option value="road">Road</option>
+              <option value="mtb">MTB</option>
+              <option value="cx">CX</option>
+              <option value="all">Other</option>
+            </select>
+          </div>
+        </li>
       </ul>
       <span>&copy;2024 Aleksandar Miloshevski. All rights reserved.</span>
     </div>
@@ -108,13 +132,16 @@
         <div class="container">
           <div class="row-wrapper">
             <% results.forEach(result => { %>
-            <div class="result-card">
+            <div class="result-card" data-type="<%= result.type %>">
               <div class="img-wrapper">
                 <img src="<%= result.image_url %>" alt="" class="result-img" />
               </div>
               <div class="text-wrapper">
                 <h2><%= result.heading %></h2>
                 <p><%= result.description %></p>
+                <!-- Display the type -->
+                <small><%= result.date.toISOString().split('T')[0] %></small>
+                <!-- Display the date -->
               </div>
             </div>
             <% }) %>

@@ -19,3 +19,18 @@ $(window).on("scroll", function () {
 
   lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For mobile or negative scrolling
 });
+
+function filterResults() {
+  const filterValue = document.getElementById("typeFilter").value;
+  const resultCards = document.querySelectorAll(".result-card");
+
+  resultCards.forEach((card) => {
+    const resultType = card.getAttribute("data-type");
+
+    if (filterValue === "" || filterValue === resultType) {
+      card.style.display = "block"; // Show the card
+    } else {
+      card.style.display = "none"; // Hide the card
+    }
+  });
+}
