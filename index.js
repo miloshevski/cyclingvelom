@@ -84,13 +84,22 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", async (req, res) => {
   try {
-    // Fetch the last 3 images from the database
-    const imagesResult = await pool.query(
-      "SELECT image_url FROM images ORDER BY created_at DESC LIMIT 3;"
-    );
-    const latestImages = imagesResult.rows; // Get the rows returned by the images query
+    // Fetch the last 3 images from Cloudinary in descending order
+    const cloudinaryResult = await cloudinary.api.resources({
+      type: "upload",
+      prefix: "gallery/", // The folder name or prefix where the images are stored
+      max_results: 3, // Fetch the last 3 images
+      resource_type: "image", // Ensure it's fetching images
+      order: "desc", // Order by most recent first
+    });
 
-    // Fetch the last 3 results from the database
+    // Map the Cloudinary results to get the image URLs
+    const latestImages = cloudinaryResult.resources.map((resource) => ({
+      url: resource.secure_url,
+      public_id: resource.public_id,
+    }));
+
+    // Fetch the last 3 results from the database (results part remains unchanged)
     const resultsQuery = await pool.query(
       "SELECT * FROM results ORDER BY id DESC LIMIT 3;"
     );
@@ -98,8 +107,8 @@ app.get("/", async (req, res) => {
 
     // Pass the fetched images and results to the index.ejs template
     res.render(path.join(__dirname, "views", "index.ejs"), {
-      latestImages,
-      latestResults,
+      latestImages, // Last 3 images from Cloudinary
+      latestResults, // Last 3 results from the database
       session: req.session,
     });
   } catch (error) {
@@ -111,53 +120,49 @@ app.get("/", async (req, res) => {
   }
 });
 
-async function getImagesFromDatabase() {
-  try {
-    const result = await pool.query("SELECT * FROM images");
-    return result.rows;
-  } catch (error) {
-    console.error("Error fetching images from database:", error);
-    throw error;
-  }
-}
 // Serve the gallery page
 app.get("/gallery", async (req, res) => {
   try {
-    const { rows: images } = await pool.query(
-      "SELECT * FROM images ORDER BY id DESC"
-    );
+    const result = await cloudinary.api.resources({
+      type: "upload",
+      prefix: "gallery/",
+      max_results: 100,
+      resource_type: "image",
+      order: "desc",
+    });
+
+    const images = result.resources.map((resource) => ({
+      url: resource.secure_url,
+      public_id: resource.public_id,
+    }));
+
+    console.log(images); // Log the images array to check the URLs
+
     res.render("gallery", { images: images, session: req.session });
   } catch (error) {
-    console.error("Error fetching images from the database:", error);
+    console.error("Error fetching images from Cloudinary:", error);
     res.status(500).send("Error fetching images.");
   }
 });
 
-app.post("/gallery/delete/:id", isAdmin, async (req, res) => {
-  const id = req.params.id; // Get the id from the URL
+app.post("/gallery/delete", async (req, res) => {
+  const { public_id } = req.body;
 
   try {
-    // Fetch the image URL from the database to get the public ID
-    const imageResult = await pool.query("SELECT * FROM images WHERE id = $1", [
-      id,
-    ]);
-    const image = imageResult.rows[0];
+    // Delete the image from Cloudinary using the public ID
+    const result = await cloudinary.uploader.destroy(public_id);
 
-    if (image) {
-      const publicId = image.image_url.split("/").pop().split(".")[0]; // Extract the public ID from the URL
-
-      // Delete the image from Cloudinary
-      await cloudinary.uploader.destroy(publicId);
-
-      // Delete the image from the database
-      await pool.query("DELETE FROM images WHERE id = $1", [id]);
-      // Redirect back to the gallery page
+    // Check the result of the deletion
+    if (result.result === "ok") {
+      console.log("Image deleted from Cloudinary:", result);
+      // Redirect back to the gallery after successful deletion
       res.redirect("/gallery");
     } else {
-      res.status(404).send("Image not found");
+      console.error("Error deleting image from Cloudinary:", result);
+      res.status(500).send("Error deleting image from Cloudinary.");
     }
   } catch (error) {
-    console.error("Error deleting image:", error);
+    console.error("Error in delete operation:", error);
     res.status(500).send("Error deleting image.");
   }
 });
@@ -232,23 +237,27 @@ app.post("/upload", upload.array("images", 10), async (req, res) => {
     return res.status(400).send("No files uploaded.");
   }
 
-  // Get the URLs of the uploaded images
-  const uploadedUrls = files.map((file) => file.path);
+  // Create an array of promises to upload each image to Cloudinary
+  const uploadPromises = files.map((file) => {
+    return cloudinary.uploader.upload(file.path, {
+      use_filename: true, // Use the original filename
+    });
+  });
 
   try {
-    // Create an array of promises to insert each URL into the 'images' table
-    const insertPromises = uploadedUrls.map((url) => {
-      return pool.query("INSERT INTO images (image_url) VALUES ($1)", [url]);
-    });
+    // Wait for all uploads to complete
+    const uploadResults = await Promise.all(uploadPromises);
 
-    // Wait for all insertions to complete
-    await Promise.all(insertPromises);
+    // Extract the URLs from the Cloudinary upload results
+    const uploadedUrls = uploadResults.map((result) => result.secure_url);
+
+    // Optionally, save the Cloudinary URLs to your database here
 
     // Redirect back to the gallery page after successful upload
     res.redirect("/gallery");
   } catch (error) {
-    console.error("Error inserting URLs into the database:", error);
-    res.status(500).send("Error saving image URLs to the database.");
+    console.error("Error uploading to Cloudinary:", error);
+    res.status(500).send("Error uploading images to Cloudinary.");
   }
 });
 

@@ -91,33 +91,34 @@
     <div class="container">
       <div id="gallery">
         <% images.forEach((image, index) => { %>
-        <div class="gallery-item">
-          <img
-            src="<%= image.image_url %>"
-            alt="Image"
-            data-index="<%= index %>"
-            loading="lazy"
-          />
-          <% if (session.user) { %>
-          <!-- Check if the user is logged in -->
-          <form
-            action="/gallery/delete/<%= image.id %>"
-            method="POST"
-            style="display: inline"
-          >
-            <button
-              type="submit"
-              class="btn btn-danger"
-              onclick="return confirm('Are you sure you want to delete this image?');"
-            >
-              Delete
-            </button>
-          </form>
-          <% } %>
-        </div>
+          <div class="gallery-item">
+            <img
+              src="<%= image.url.replace('/upload', '/upload/w_300,h_200,g_face,c_fill,q_auto') %>"
+              alt="Image"
+              data-index="<%= index %>"
+              data-full-res-url="<%= image.url %>"
+              loading="lazy"
+              class="gallery-image"
+            />
+            <% if (session.user) { %>
+            <!-- Form to delete image -->
+            <form action="/gallery/delete" method="POST" style="display: inline">
+              <!-- Hidden field for public_id -->
+              <input type="hidden" name="public_id" value="<%= image.public_id %>" />
+              <button
+                type="submit"
+                class="btn btn-danger"
+                onclick="return confirm('Are you sure you want to delete this image?');"
+              >
+                Delete
+              </button>
+            </form>
+            <% } %>
+          </div>
         <% }) %>
       </div>
-
+      
+  
       <div id="fullscreenModal" class="modal">
         <span id="closeModal" class="close" aria-label="Close modal"
           >&times;</span

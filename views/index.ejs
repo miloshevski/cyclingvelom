@@ -189,7 +189,7 @@
               <% if (latestImages && latestImages.length > 0) { %>
                 <% latestImages.forEach(function(image) { %>
                   <div class="img-wrapper">
-                    <img src="<%= image.image_url %>" alt="Gallery Image" />
+                    <img src="<%= image.url.replace('/upload', '/upload/w_300,h_200,g_face,c_fill,q_auto') %>" />
                   </div>
                 <% }); %>
               <% } else { %>

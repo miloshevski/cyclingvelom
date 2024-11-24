@@ -43,9 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
     fullscreenModal.style.display = "none";
   }
 
-  // Function to show the image at a specific index
+  // Function to show the image at a specific index (with full resolution)
   function showImage(index) {
-    const imgUrl = images[index].getAttribute("src");
+    const imgUrl = images[index].getAttribute("data-full-res-url"); // Get full-res image URL
     document.getElementById("fullscreenImage").setAttribute("src", imgUrl);
   }
 
