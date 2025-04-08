@@ -231,10 +231,13 @@ h2 {
   row-gap: 7%;
 }
 #history .btn {
-  border: solid 2px #fff;
+  border: solid 3px #fff;
   background-color: #ff0044;
   color: #fff;
   transition: 0.2s;
+  font-weight: 800;
+  padding: 15px 30px;
+  border-radius: 50px;
 }
 #history .btn:hover {
   background-color: #fff;
@@ -322,78 +325,83 @@ h4 {
 }
 /* RESULTS */
 #results {
-  height: fit-content;
-  background-color: #fff;
-  padding: 5% 0;
+  background-color: #f8f9fa;
+  padding: 80px 20px;
 }
+
 #results .container {
-  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   width: 100%;
 }
+
 #results .row {
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 30px;
+  row-gap: 40px;
 }
-#results h2,
+
 #results h1 {
-  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 900;
   color: #ff0044;
-  font-weight: 800;
+  text-align: center;
 }
+
 #results .results-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
   width: 100%;
 }
+
 .result-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
-  width: 35%;
-  height: 100%;
-  padding: 0 50px;
-  row-gap: 20px;
+}
+
+.result-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .result-img {
-  height: 200px;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 15px;
 }
-.result-card:not(:last-child) {
-  border-right: solid 2px #ff0044;
-}
-.result-card p {
+
+.result-card h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
   color: #ff0044;
-  font-weight: 800;
 }
-.btn {
-  width: fit-content;
-  padding: 15px 20px;
-  border: none;
-  border-radius: 30px;
-  font-weight: 800;
-}
+
 #results .btn {
-  background-color: #fff;
+  background-color: transparent;
   color: #ff0044;
-  border: solid 2px #ff0044;
-  font-size: 15px;
-  font-weight: 800;
-  transition: 0.3s;
+  border: 2px solid #ff0044;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: 0.3s ease;
+  box-shadow: 0 0 0 transparent;
 }
 
 #results .btn:hover {
   background-color: #ff0044;
   color: #fff;
+  box-shadow: 0 0 10px rgba(255, 0, 68, 0.5);
 }
-.result-card * {
-  cursor: pointer;
-}
+
 /* GALLERY */
 #gallery {
   background-color: #ff0044;
@@ -437,6 +445,8 @@ h4 {
   color: white;
   font-weight: 800;
   transition: 0.3;
+  padding: 15px 20px;
+  border-radius: 30px;
 }
 #gallery .btn:hover {
   background-color: #fff;

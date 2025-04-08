@@ -3,36 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Favicon -->
     <link rel="icon" href="logos/slika3.png" type="image/png" />
+
+    <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="js/results.js"></script>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="/styles/results.css" />
     <title>VELO-M TERMALIFT</title>
   </head>
+
   <body>
+    <!-- NAVBAR -->
     <nav id="navbar">
       <span>Results</span>
       <ul class="menu">
-        <li class="tab-item">
-          <a href="/" class="tab-link">Home</a>
-        </li>
-        <li class="tab-item">
-          <a href="/#about" class="tab-link">About</a>
-        </li>
+        <li class="tab-item"><a href="/" class="tab-link">Home</a></li>
+        <li class="tab-item"><a href="/#about" class="tab-link">About</a></li>
         <li class="tab-item">
           <a href="/history" class="tab-link">History</a>
         </li>
@@ -42,36 +44,35 @@
         <li class="tab-item">
           <a href="/gallery" class="tab-link">Gallery</a>
         </li>
-        <li class="tab-item">
-          <a href="/#join" class="tab-link">Contact</a>
-        </li>
-        <%if(session.user){%>
+        <li class="tab-item"><a href="/#join" class="tab-link">Contact</a></li>
+        <% if (session.user) { %>
         <li class="tab-item">
           <a href="/results/upload" class="tab-link upload-btn">Add Result</a>
         </li>
-        <%}%>
-        <li class="tab-item">
-          <div class="filter-container">
-            <label for="typeFilter">Filter by Type:</label>
-            <select id="typeFilter" onchange="filterResults()">
-              <option value="">All</option>
-              <option value="road">Road</option>
-              <option value="mtb">MTB</option>
-              <option value="cx">CX</option>
-              <option value="all">Other</option>
-            </select>
-          </div>
-        </li>
+        <% } %>
       </ul>
       <img
         onclick="toggleSideMenu()"
         id="breadcrumbs"
         src="logos/breadcrumbs.svg"
-        alt=""
+        alt="Menu"
       />
     </nav>
+
+    <!-- ✅ FILTER BAR (outside navbar for full access on mobile) -->
+    <div class="filter-bar">
+      <label for="typeFilter">Filter by Type:</label>
+      <select id="typeFilter" onchange="filterResults()">
+        <option value="">All</option>
+        <option value="road">Road</option>
+        <option value="mtb">MTB</option>
+        <option value="cx">CX</option>
+        <option value="all">Other</option>
+      </select>
+    </div>
+
+    <!-- SIDE MENU (hamburger) -->
     <div class="side-menu hidden">
-      <!-- <img id="close" onclick="toggleSideMenu()" src="logos/close.svg" alt=""> -->
       <ul class="menu aside">
         <li class="tab-item">
           <a onclick="toggleSideMenu()" href="/" class="tab-link-aside">Home</a>
@@ -101,7 +102,7 @@
             >Contact</a
           >
         </li>
-        <%if(session.user){%>
+        <% if (session.user) { %>
         <li class="tab-item">
           <a
             onclick="toggleSideMenu()"
@@ -111,22 +112,12 @@
             >Add Result</a
           >
         </li>
-        <%}%>
-        <li class="tab-item">
-          <div class="filter-container">
-            <label for="typeFilter">Filter by Type:</label>
-            <select id="typeFilter" onchange="filterResults()">
-              <option value="">All</option>
-              <option value="road">Road</option>
-              <option value="mtb">MTB</option>
-              <option value="cx">CX</option>
-              <option value="all">Other</option>
-            </select>
-          </div>
-        </li>
+        <% } %>
       </ul>
       <span>&copy;2024 Aleksandar Miloshevski. All rights reserved.</span>
     </div>
+
+    <!-- RESULTS SECTION -->
     <main>
       <div id="results">
         <div class="container">
@@ -134,14 +125,19 @@
             <% results.forEach(result => { %>
             <div class="result-card" data-type="<%= result.type %>">
               <div class="img-wrapper">
-                <img src="<%= result.image_url %>" alt="" class="result-img" />
+                <img
+                  src="<%= result.image_url %>"
+                  alt="Result Image"
+                  class="result-img"
+                />
               </div>
               <div class="text-wrapper">
                 <h2><%= result.heading %></h2>
                 <p><%= result.description %></p>
-                <!-- Display the type -->
                 <small><%= result.date.toISOString().split('T')[0] %></small>
-                <!-- Display the date -->
+                <button class="toggle-btn" onclick="toggleExpand(this)">
+                  Show More
+                </button>
               </div>
             </div>
             <% }) %>

@@ -34,3 +34,14 @@ function filterResults() {
     }
   });
 }
+
+function toggleExpand(button) {
+  const wrapper = button.parentElement;
+  wrapper.classList.toggle("expanded");
+
+  if (wrapper.classList.contains("expanded")) {
+    button.innerText = "Show Less";
+  } else {
+    button.innerText = "Show More";
+  }
+}
